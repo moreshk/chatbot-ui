@@ -324,7 +324,7 @@ export const ChatInput = ({
               minHeight: '36px'
             }}
             placeholder={
-              t('Type a message about your property search ...') || ''
+              t('Type a message ...') || ''
             }
             value={content}
             rows={1}

@@ -35,6 +35,46 @@ import { SystemPrompt } from './SystemPrompt';
 import { TemperatureSlider } from './Temperature';
 import { MemoizedChatMessage } from './MemoizedChatMessage';
 
+//New Code
+import { ApplicationError, UserError } from '@/lib/errors'
+
+import { supabase } from '@/lib/supabase';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+async function insertUserResponse(query: string, response: string) {
+
+  console.log("I am in the insert user function")
+  console.log("Query:", query);
+  console.log("Response:", response);
+
+  try {
+    const { data, error } = await supabase
+      .from('user_response')
+      .insert([
+        {
+          user_question: query,
+          bot_answer: response,
+          created_at: new Date()
+        },
+      ]);
+
+    console.log("Data:", data);
+    console.log("Error:", error);
+
+    if (error) {
+      console.error('Error inserting user response:', error);
+    } else {
+      console.log('User response inserted successfully:', data);
+    }
+  } catch (error) {
+    console.error('Error inserting user response:', error);
+  }
+
+
+}
+//END
+
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
 }
@@ -153,6 +193,16 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           let done = false;
           let isFirst = true;
           let text = '';
+
+          //New code to insert user responses in supabase db
+          if (!supabaseUrl) {
+            throw new ApplicationError('Missing environment variable SUPABASE_URL')
+          }
+      
+          if (!supabaseServiceKey) {
+            throw new ApplicationError('Missing environment variable SUPABASE_SERVICE_ROLE_KEY')
+          }
+      //
           while (!done) {
             if (stopConversationRef.current === true) {
               controller.abort();
