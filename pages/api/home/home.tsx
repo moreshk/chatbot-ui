@@ -277,20 +277,21 @@ const Home = ({
       dispatch({ field: 'pluginKeys', value: pluginKeys });
     }
 
-    if (window.innerWidth < 640) {
+    // if (window.innerWidth < 640) 
+    // {
       dispatch({ field: 'showChatbar', value: false });
       dispatch({ field: 'showPromptbar', value: false });
-    }
+    // }
 
-    const showChatbar = localStorage.getItem('showChatbar');
-    if (showChatbar) {
-      dispatch({ field: 'showChatbar', value: showChatbar === 'true' });
-    }
+    // const showChatbar = localStorage.getItem('showChatbar');
+    // if (showChatbar) {
+    //   dispatch({ field: 'showChatbar', value: showChatbar === 'true' });
+    // }
 
-    const showPromptbar = localStorage.getItem('showPromptbar');
-    if (showPromptbar) {
-      dispatch({ field: 'showPromptbar', value: showPromptbar === 'true' });
-    }
+    // const showPromptbar = localStorage.getItem('showPromptbar');
+    // if (showPromptbar) {
+    //   dispatch({ field: 'showPromptbar', value: showPromptbar === 'true' });
+    // }
 
     const folders = localStorage.getItem('folders');
     if (folders) {
