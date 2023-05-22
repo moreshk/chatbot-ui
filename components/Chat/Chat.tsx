@@ -41,7 +41,7 @@ import { ApplicationError, UserError } from '@/lib/errors'
 import { supabase } from '@/lib/supabase';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-console.log(supabaseServiceKey)
+// console.log(supabaseUrl)
 async function insertUserResponse(query: string, response: string) {
 
   console.log("I am in the insert user function")
@@ -194,15 +194,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           let isFirst = true;
           let text = '';
 
-          //New code to insert user responses in supabase db
-          if (!supabaseUrl) {
-            throw new ApplicationError('Missing environment variable SUPABASE_URL')
-          }
-      
-          // if (!supabaseServiceKey) {
-          //   throw new ApplicationError('Missing environment variable SUPABASE_SERVICE_ROLE_KEY')
-          // }
-      //
           while (!done) {
             if (stopConversationRef.current === true) {
               controller.abort();
@@ -248,6 +239,12 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
               });
             }
           }
+          
+          //New code
+          console.log("Inserting question from user and response...");
+          insertUserResponse(message.content, text);
+          //END
+
           saveConversation(updatedConversation);
           const updatedConversations: Conversation[] = conversations.map(
             (conversation) => {
