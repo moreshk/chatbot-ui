@@ -41,7 +41,7 @@ import { ApplicationError, UserError } from '@/lib/errors'
 import { supabase } from '@/lib/supabase';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-
+console.log(supabaseServiceKey)
 async function insertUserResponse(query: string, response: string) {
 
   console.log("I am in the insert user function")
@@ -199,9 +199,9 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             throw new ApplicationError('Missing environment variable SUPABASE_URL')
           }
       
-          if (!supabaseServiceKey) {
-            throw new ApplicationError('Missing environment variable SUPABASE_SERVICE_ROLE_KEY')
-          }
+          // if (!supabaseServiceKey) {
+          //   throw new ApplicationError('Missing environment variable SUPABASE_SERVICE_ROLE_KEY')
+          // }
       //
           while (!done) {
             if (stopConversationRef.current === true) {
@@ -456,7 +456,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                         <Spinner size="16px" className="mx-auto" />
                       </div>
                     ) : (
-                      'Lead Qualifier Bot'
+                      'Koretex SmartBot'
                     )}
                   </div>
 
