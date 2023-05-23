@@ -27,6 +27,7 @@ import HomeContext from '@/pages/api/home/home.context';
 import { PluginSelect } from './PluginSelect';
 import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
+import { useRouter } from 'next/router';
 
 interface Props {
   onSend: (message: Message, plugin: Plugin | null) => void;
@@ -64,6 +65,10 @@ export const ChatInput = ({
   const [plugin, setPlugin] = useState<Plugin | null>(null);
 
   const promptListRef = useRef<HTMLUListElement | null>(null);
+
+  const router = useRouter()
+  const chatbotId = router.query.chatbotId;
+  console.log(router.query);
 
   const filteredPrompts = prompts.filter((prompt) =>
     prompt.name.toLowerCase().includes(promptInputValue.toLowerCase()),

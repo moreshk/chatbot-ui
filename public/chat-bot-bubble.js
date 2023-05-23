@@ -1,6 +1,8 @@
 const container = document.createElement('div')
 const iframe = document.createElement('iframe')
-iframe.src = 'https://leadqualifier.koretex.ai'
+const currentScript = document.currentScript;
+const chatbotId = currentScript.getAttribute('data-chatbot-id');
+iframe.src = `https://leadqualifier.koretex.ai/?chatbotId=${chatbotId}`
 iframe.style.display = 'none'
 iframe.id = 'my-iframe'
 iframe.style.border = 'none'
