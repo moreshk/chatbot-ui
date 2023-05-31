@@ -5,9 +5,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
-import { useStore } from 'zustand';
+// import { useStore } from 'zustand';
 
-import { GET_DEFAULT_SYSTEM_PROMPT, GET_CHAT_QUESTIONS } from '@/utils/app/const';
+import { GET_DEFAULT_SYSTEM_PROMPT } from '@/utils/app/const';
 
 import '@/styles/globals.css';
 
@@ -19,13 +19,13 @@ function App({ Component, pageProps }: AppProps<{}>) {
   const queryClient = new QueryClient();
   console.log(DEFAULT_SYSTEM_PROMPT);
 
-  // Create a hook to use the zustand store
-  const { setChatQuestions, questions } = useStore(GET_CHAT_QUESTIONS);
+  // // Create a hook to use the zustand store
+  // const { setChatQuestions, questions } = useStore(GET_CHAT_QUESTIONS);
 
-  // Call the function to update the questions array
-  setChatQuestions();
+  // // Call the function to update the questions array
+  // setChatQuestions();
 
-  console.log(questions);
+  // console.log(questions);
 
   useEffect(() => {
     setDefaultSystemPrompt();
