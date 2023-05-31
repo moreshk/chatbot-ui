@@ -23,7 +23,8 @@ function App({ Component, pageProps }: AppProps<{}>) {
   // const { setChatQuestions, questions } = GET_CHAT_QUESTIONS();
 
   const { setChatQuestions, questions } = useStore(GET_CHAT_QUESTIONS);
-  const { setChatbotDetails, name, about_us } = useStore(GET_CHATBOT_DETAILS);
+  const { setChatbotDetails, name, about_us, business_name } = useStore(GET_CHATBOT_DETAILS);
+
 
   // // Call the function to update the questions array
 
@@ -40,7 +41,7 @@ function App({ Component, pageProps }: AppProps<{}>) {
   console.log("Chatbot name:", name);
   console.log("About us:", about_us);
   console.log("Questions", questionsString);
-  
+  console.log("Business name:", business_name);
 
   if (!DEFAULT_SYSTEM_PROMPT) return null;
 
