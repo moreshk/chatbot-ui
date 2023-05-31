@@ -30,7 +30,7 @@ function App({ Component, pageProps }: AppProps<{}>) {
     setChatQuestions();
   }, []);
 
-  console.log(questions);
+  console.log("Questions",questions);
 
   if (!DEFAULT_SYSTEM_PROMPT) return null;
 
