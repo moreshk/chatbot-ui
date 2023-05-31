@@ -44,18 +44,18 @@ export const AZURE_DEPLOYMENT_ID =
     }
   }))
 
-  // export const GET_CHAT_QUESTIONS = create<{ questions: string[], setChatQuestions: () => void }>((set) => ({
-  //   questions: [],
-  //   setChatQuestions: async () => {
-  //     const chatbotId = Router.query.chatbotId;
-  //     const { data, error } = await supabase.from('chat_questions').select('question').eq('chatbot_id', chatbotId);
-  //     if (error) {
-  //       console.log(error);
-  //       return;
-  //     }
-  //     if (data) {
-  //       const questions = data.map(item => item.question);
-  //       set({ questions });
-  //     }
-  //   }
-  // }))
+  export const GET_CHAT_QUESTIONS = create<{ questions: string[], setChatQuestions: () => void }>((set) => ({
+    questions: [],
+    setChatQuestions: async () => {
+      const chatbotId = Router.query.chatbotId;
+      const { data, error } = await supabase.from('chat_questions').select('question').eq('chatbot_id', chatbotId);
+      if (error) {
+        console.log(error);
+        return;
+      }
+      if (data) {
+        const questions = data.map(item => item.question);
+        set({ questions });
+      }
+    }
+  }))
