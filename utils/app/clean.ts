@@ -1,7 +1,7 @@
 import { Conversation } from '@/types/chat';
 import { OpenAIModelID, OpenAIModels } from '@/types/openai';
 
-import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from './const';
+import { GET_DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from './const';
 
 export const cleanSelectedConversation = (conversation: Conversation) => {
   // added model for each conversation (3/20/23)
@@ -24,7 +24,7 @@ export const cleanSelectedConversation = (conversation: Conversation) => {
   if (!updatedConversation.prompt) {
     updatedConversation = {
       ...updatedConversation,
-      prompt: updatedConversation.prompt || DEFAULT_SYSTEM_PROMPT,
+      prompt: updatedConversation.prompt || GET_DEFAULT_SYSTEM_PROMPT.getState().DEFAULT_SYSTEM_PROMPT,
     };
   }
 
@@ -71,7 +71,7 @@ export const cleanConversationHistory = (history: any[]): Conversation[] => {
       }
 
       if (!conversation.prompt) {
-        conversation.prompt = DEFAULT_SYSTEM_PROMPT;
+        conversation.prompt = GET_DEFAULT_SYSTEM_PROMPT.getState().DEFAULT_SYSTEM_PROMPT;
       }
 
       if (!conversation.temperature) {

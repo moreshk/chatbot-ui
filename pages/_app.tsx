@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -5,12 +6,22 @@ import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
 
+import { GET_DEFAULT_SYSTEM_PROMPT } from '@/utils/app/const';
+
 import '@/styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 function App({ Component, pageProps }: AppProps<{}>) {
+  const { setDefaultSystemPrompt, DEFAULT_SYSTEM_PROMPT } =
+    GET_DEFAULT_SYSTEM_PROMPT();
   const queryClient = new QueryClient();
+  console.log(DEFAULT_SYSTEM_PROMPT);
+  useEffect(() => {
+    setDefaultSystemPrompt();
+  }, []);
+
+  if (!DEFAULT_SYSTEM_PROMPT) return null;
 
   return (
     <div className={inter.className}>

@@ -15,7 +15,10 @@ import {
   cleanConversationHistory,
   cleanSelectedConversation,
 } from '@/utils/app/clean';
-import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '@/utils/app/const';
+import {
+  DEFAULT_TEMPERATURE,
+  GET_DEFAULT_SYSTEM_PROMPT,
+} from '@/utils/app/const';
 import {
   saveConversation,
   saveConversations,
@@ -191,7 +194,7 @@ const Home = ({
         maxLength: OpenAIModels[defaultModelId].maxLength,
         tokenLimit: OpenAIModels[defaultModelId].tokenLimit,
       },
-      prompt: DEFAULT_SYSTEM_PROMPT,
+      prompt: GET_DEFAULT_SYSTEM_PROMPT.getState().DEFAULT_SYSTEM_PROMPT,
       temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
       folderId: null,
     };
@@ -277,10 +280,10 @@ const Home = ({
       dispatch({ field: 'pluginKeys', value: pluginKeys });
     }
 
-    // if (window.innerWidth < 640) 
+    // if (window.innerWidth < 640)
     // {
-      dispatch({ field: 'showChatbar', value: false });
-      dispatch({ field: 'showPromptbar', value: false });
+    dispatch({ field: 'showChatbar', value: false });
+    dispatch({ field: 'showPromptbar', value: false });
     // }
 
     // const showChatbar = localStorage.getItem('showChatbar');
@@ -335,7 +338,7 @@ const Home = ({
           name: t('New Conversation'),
           messages: [],
           model: OpenAIModels[defaultModelId],
-          prompt: DEFAULT_SYSTEM_PROMPT,
+          prompt: GET_DEFAULT_SYSTEM_PROMPT.getState().DEFAULT_SYSTEM_PROMPT,
           temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
           folderId: null,
         },

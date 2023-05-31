@@ -1,4 +1,4 @@
-import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '@/utils/app/const';
+import { GET_DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '@/utils/app/const';
 import { OpenAIError, OpenAIStream } from '@/utils/server';
 
 import { ChatBody, Message } from '@/types/chat';
@@ -26,7 +26,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     let promptToSend = prompt;
     if (!promptToSend) {
-      promptToSend = DEFAULT_SYSTEM_PROMPT;
+      promptToSend = GET_DEFAULT_SYSTEM_PROMPT.getState().DEFAULT_SYSTEM_PROMPT;
     }
 
     let temperatureToUse = temperature;

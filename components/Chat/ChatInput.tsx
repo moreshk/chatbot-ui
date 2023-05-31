@@ -17,6 +17,7 @@ import {
 } from 'react';
 
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 import { Message } from '@/types/chat';
 import { Plugin } from '@/types/plugin';
@@ -27,7 +28,6 @@ import HomeContext from '@/pages/api/home/home.context';
 import { PluginSelect } from './PluginSelect';
 import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
-import { useRouter } from 'next/router';
 
 interface Props {
   onSend: (message: Message, plugin: Plugin | null) => void;
@@ -65,10 +65,6 @@ export const ChatInput = ({
   const [plugin, setPlugin] = useState<Plugin | null>(null);
 
   const promptListRef = useRef<HTMLUListElement | null>(null);
-
-  const router = useRouter()
-  const chatbotId = router.query.chatbotId;
-  console.log(router.query);
 
   const filteredPrompts = prompts.filter((prompt) =>
     prompt.name.toLowerCase().includes(promptInputValue.toLowerCase()),
@@ -238,8 +234,9 @@ export const ChatInput = ({
     if (textareaRef && textareaRef.current) {
       textareaRef.current.style.height = 'inherit';
       textareaRef.current.style.height = `${textareaRef.current?.scrollHeight}px`;
-      textareaRef.current.style.overflow = `${textareaRef?.current?.scrollHeight > 400 ? 'auto' : 'hidden'
-        }`;
+      textareaRef.current.style.overflow = `${
+        textareaRef?.current?.scrollHeight > 400 ? 'auto' : 'hidden'
+      }`;
     }
   }, [content]);
 
@@ -322,15 +319,14 @@ export const ChatInput = ({
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
               maxHeight: '400px',
-              overflow: `${textareaRef.current && textareaRef.current.scrollHeight > 400
+              overflow: `${
+                textareaRef.current && textareaRef.current.scrollHeight > 400
                   ? 'auto'
                   : 'hidden'
-                }`,
-              minHeight: '36px'
+              }`,
+              minHeight: '36px',
             }}
-            placeholder={
-              t('Type a message ...') || ''
-            }
+            placeholder={t('Type a message ...') || ''}
             value={content}
             rows={1}
             onCompositionStart={() => setIsTyping(true)}
@@ -384,12 +380,15 @@ export const ChatInput = ({
         </div>
       </div>
       <div className="text-center py-2 font-semibold text-gray-800 dark:text-gray-100">
-        Powered by <a
+        Powered by{' '}
+        <a
           href="https://koretex.ai"
           target="_blank"
           rel="noreferrer"
           className="underline text-gray-1000"
-        >Koretex AI</a>  
+        >
+          Koretex AI
+        </a>
       </div>
       {/* <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
         <a

@@ -4,7 +4,10 @@ import { useTranslation } from 'next-i18next';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
-import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '@/utils/app/const';
+import {
+  DEFAULT_TEMPERATURE,
+  GET_DEFAULT_SYSTEM_PROMPT,
+} from '@/utils/app/const';
 import { saveConversation, saveConversations } from '@/utils/app/conversation';
 import { saveFolders } from '@/utils/app/folders';
 import { exportData, importData } from '@/utils/app/importExport';
@@ -15,8 +18,8 @@ import { OpenAIModels } from '@/types/openai';
 import { PluginKey } from '@/types/plugin';
 
 import HomeContext from '@/pages/api/home/home.context';
-// import HomeContext from '@/pages/iframes/chat-bot.context';
 
+// import HomeContext from '@/pages/iframes/chat-bot.context';
 import { ChatFolders } from './components/ChatFolders';
 import { ChatbarSettings } from './components/ChatbarSettings';
 import { Conversations } from './components/Conversations';
@@ -29,7 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const Chatbar = () => {
   const { t } = useTranslation('sidebar');
-
+  const { DEFAULT_SYSTEM_PROMPT } = GET_DEFAULT_SYSTEM_PROMPT();
   const chatBarContextValue = useCreateReducer<ChatbarInitialState>({
     initialState,
   });
