@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
-// import { useStore } from 'zustand';
+import { useStore } from 'zustand';
 
 import { GET_DEFAULT_SYSTEM_PROMPT, GET_CHAT_QUESTIONS } from '@/utils/app/const';
 
@@ -19,8 +19,10 @@ function App({ Component, pageProps }: AppProps<{}>) {
   const queryClient = new QueryClient();
   console.log(DEFAULT_SYSTEM_PROMPT);
 
-  // // Create a hook to use the zustand store
-  const { setChatQuestions, questions } = GET_CHAT_QUESTIONS();
+  // // // Create a hook to use the zustand store
+  // const { setChatQuestions, questions } = GET_CHAT_QUESTIONS();
+
+  const { setChatQuestions, questions } = useStore(GET_CHAT_QUESTIONS);
 
   // // Call the function to update the questions array
 
@@ -30,12 +32,11 @@ function App({ Component, pageProps }: AppProps<{}>) {
     setChatQuestions();
   }, []);
 
-  // console.log("Questions",questions);
-   // Concatenate all questions into a single string
-   const questionsString = questions.join(" ");
+  // Concatenate all questions into a single string with their question numbers
+  const questionsString = questions.map(q => `${q.number}. ${q.text}`).join(" ");
 
-   console.log("Questions", questionsString);
-
+  console.log("Questions", questionsString);
+  
   if (!DEFAULT_SYSTEM_PROMPT) return null;
 
   return (
