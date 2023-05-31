@@ -24,19 +24,34 @@ export const OPENAI_ORGANIZATION =
 export const AZURE_DEPLOYMENT_ID =
   process.env.AZURE_DEPLOYMENT_ID || '';
 
-export const GET_DEFAULT_SYSTEM_PROMPT = create<{ DEFAULT_SYSTEM_PROMPT: string, setDefaultSystemPrompt: () => void }>((set) => ({
-  DEFAULT_SYSTEM_PROMPT: "",
-  setDefaultSystemPrompt: async () => {
-    const chatbotId = Router.query.chatbotId;
-    const { data, error } = await supabase.from('chatbots').select('prompt').eq('id', chatbotId)
-    if (error) {
-      console.log(error)
-      return
+  export const GET_DEFAULT_SYSTEM_PROMPT = create<{ DEFAULT_SYSTEM_PROMPT: string, setDefaultSystemPrompt: () => void }>((set) => ({
+    DEFAULT_SYSTEM_PROMPT: "",
+    setDefaultSystemPrompt: async () => {
+      const chatbotId = Router.query.chatbotId;
+  
+      // Fetch and set the chatbot prompt
+      const { data: promptData, error: promptError } = await supabase.from('chatbots').select('prompt').eq('id', chatbotId)
+      if (promptError) {
+        console.log(promptError)
+        return
+      }
+      if (promptData) {
+        set({ DEFAULT_SYSTEM_PROMPT: promptData[0].prompt })
+      } else {
+        set({ DEFAULT_SYSTEM_PROMPT: 'hello' })
+      }
+  
+      // Fetch and log chatbot questions
+      const { data: questionData, error: questionError } = await supabase.from('chat_questions').select('question').eq('chatbot_id', chatbotId);
+      if (questionError) {
+          console.error('Error fetching questions:', questionError);
+          return;
+      }
+      if (questionData) {
+          console.log('Questions for chatbot', chatbotId);
+          questionData.forEach(item => console.log(item.question));
+      } else {
+          console.log('No questions found for chatbot', chatbotId);
+      }
     }
-    if (data) {
-      set({ DEFAULT_SYSTEM_PROMPT: data[0].prompt })
-      return
-    }
-    set({ DEFAULT_SYSTEM_PROMPT: 'hello' })
-  }
-}))
+  }))
