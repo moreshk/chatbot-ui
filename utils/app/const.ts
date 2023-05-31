@@ -44,18 +44,38 @@ export const AZURE_DEPLOYMENT_ID =
     }
   }))
 
-  export const GET_CHAT_QUESTIONS = create<{ questions: string[], setChatQuestions: () => void }>((set) => ({
-    questions: [],
-    setChatQuestions: async () => {
-      const chatbotId = Router.query.chatbotId;
-      const { data, error } = await supabase.from('chat_questions').select('question').eq('chatbot_id', chatbotId);
-      if (error) {
-        console.log(error);
-        return;
-      }
-      if (data) {
-        const questions = data.map(item => item.question);
-        set({ questions });
-      }
+  // export const GET_CHAT_QUESTIONS = create<{ questions: string[], setChatQuestions: () => void }>((set) => ({
+  //   questions: [],
+  //   setChatQuestions: async () => {
+  //     const chatbotId = Router.query.chatbotId;
+  //     const { data, error } = await supabase.from('chat_questions').select('question').eq('chatbot_id', chatbotId);
+  //     if (error) {
+  //       console.log(error);
+  //       return;
+  //     }
+  //     if (data) {
+  //       const questions = data.map(item => item.question);
+  //       set({ questions });
+  //     }
+  //   }
+  // }))
+
+  // Change in your zustand store
+export const GET_CHAT_QUESTIONS = create(set => ({
+  questions: [],
+  setChatQuestions: async () => {
+    const chatbotId = Router.query.chatbotId;
+    const { data, error } = await supabase.from('chat_questions').select('question, question_number').eq('chatbot_id', chatbotId)
+    if (error) {
+      console.log(error);
+      return;
     }
-  }))
+    if (data) {
+      // sort the data by question_number
+      const sortedData = data.sort((a, b) => a.question_number - b.question_number);
+      // map the sorted data to an array of strings where each string is of the format "question_number. question"
+      const questionsArray = sortedData.map(item => `${item.question_number}. ${item.question}`);
+      set({ questions: questionsArray });
+    }
+  },
+}));
