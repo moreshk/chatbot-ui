@@ -7,7 +7,7 @@ import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
 import { useStore } from 'zustand';
 
-import { GET_DEFAULT_SYSTEM_PROMPT, GET_CHAT_QUESTIONS } from '@/utils/app/const';
+import { GET_DEFAULT_SYSTEM_PROMPT, GET_CHAT_QUESTIONS, GET_CHATBOT_DETAILS } from '@/utils/app/const';
 
 import '@/styles/globals.css';
 
@@ -23,6 +23,7 @@ function App({ Component, pageProps }: AppProps<{}>) {
   // const { setChatQuestions, questions } = GET_CHAT_QUESTIONS();
 
   const { setChatQuestions, questions } = useStore(GET_CHAT_QUESTIONS);
+  const { setChatbotDetails, name, about_us } = useStore(GET_CHATBOT_DETAILS);
 
   // // Call the function to update the questions array
 
@@ -30,13 +31,17 @@ function App({ Component, pageProps }: AppProps<{}>) {
   useEffect(() => {
     setDefaultSystemPrompt();
     setChatQuestions();
+    setChatbotDetails();
   }, []);
 
   // Concatenate all questions into a single string with their question numbers
   const questionsString = questions.map(q => `${q.number}. ${q.text}`).join(" ");
 
+  console.log("Chatbot name:", name);
+  console.log("About us:", about_us);
   console.log("Questions", questionsString);
   
+
   if (!DEFAULT_SYSTEM_PROMPT) return null;
 
   return (

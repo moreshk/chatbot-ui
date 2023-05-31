@@ -101,3 +101,28 @@ export const GET_CHAT_QUESTIONS = create<ChatQuestionStore>(set => ({
     }
   },
 }));
+
+type ChatbotDetailsStore = {
+  name: string,
+  about_us: string,
+  setChatbotDetails: () => Promise<void>,
+};
+
+export const GET_CHATBOT_DETAILS = create<ChatbotDetailsStore>(set => ({
+  name: "",
+  about_us: "",
+  setChatbotDetails: async () => {
+    const chatbotId = Router.query.chatbotId;
+    const { data, error } = await supabase
+      .from('chatbots')
+      .select('name, about_us')
+      .eq('id', chatbotId);
+    if (error) {
+      console.log(error);
+      return;
+    }
+    if (data && data.length > 0) {
+      set({ name: data[0].name, about_us: data[0].about_us });
+    }
+  },
+}));
