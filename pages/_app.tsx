@@ -30,7 +30,11 @@ function App({ Component, pageProps }: AppProps<{}>) {
     setChatQuestions();
   }, []);
 
-  console.log("Questions",questions);
+  // console.log("Questions",questions);
+   // Concatenate all questions into a single string
+   const questionsString = questions.join(" ");
+
+   console.log("Questions", questionsString);
 
   if (!DEFAULT_SYSTEM_PROMPT) return null;
 
