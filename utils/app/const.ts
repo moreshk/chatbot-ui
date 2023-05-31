@@ -40,18 +40,22 @@ export const AZURE_DEPLOYMENT_ID =
       } else {
         set({ DEFAULT_SYSTEM_PROMPT: 'hello' })
       }
-  
-      // Fetch and log chatbot questions
-      const { data: questionData, error: questionError } = await supabase.from('chat_questions').select('question').eq('chatbot_id', chatbotId);
-      if (questionError) {
-          console.error('Error fetching questions:', questionError);
-          return;
+
+    }
+  }))
+
+  export const GET_CHAT_QUESTIONS = create<{ questions: string[], setChatQuestions: () => void }>((set) => ({
+    questions: [],
+    setChatQuestions: async () => {
+      const chatbotId = Router.query.chatbotId;
+      const { data, error } = await supabase.from('chat_questions').select('question').eq('chatbot_id', chatbotId);
+      if (error) {
+        console.log(error);
+        return;
       }
-      if (questionData) {
-          console.log('Questions for chatbot', chatbotId);
-          questionData.forEach(item => console.log(item.question));
-      } else {
-          console.log('No questions found for chatbot', chatbotId);
+      if (data) {
+        const questions = data.map(item => item.question);
+        set({ questions });
       }
     }
   }))

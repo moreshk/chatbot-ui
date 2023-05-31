@@ -6,7 +6,7 @@ import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
 
-import { GET_DEFAULT_SYSTEM_PROMPT } from '@/utils/app/const';
+import { GET_DEFAULT_SYSTEM_PROMPT, GET_CHAT_QUESTIONS } from '@/utils/app/const';
 
 import '@/styles/globals.css';
 
@@ -17,6 +17,7 @@ function App({ Component, pageProps }: AppProps<{}>) {
     GET_DEFAULT_SYSTEM_PROMPT();
   const queryClient = new QueryClient();
   console.log(DEFAULT_SYSTEM_PROMPT);
+  console.log(GET_CHAT_QUESTIONS);
   useEffect(() => {
     setDefaultSystemPrompt();
   }, []);
