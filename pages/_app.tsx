@@ -49,7 +49,10 @@ Only once the user responds, ask if you can collect the user's name and email to
 Limit your responses to no more than one or two lines at a time and collect information from the user by asking one question at a time only while engaging the user in a conversation. Respond using markdown.`;
 
   console.log("calculated prompt", myString);
-  console.log("constructed prompt", DEFAULT_SYSTEM_PROMPT);
+  // console.log("constructed prompt", DEFAULT_SYSTEM_PROMPT);
+  useEffect(() => {
+    console.log("constructed prompt", DEFAULT_SYSTEM_PROMPT);
+  }, [DEFAULT_SYSTEM_PROMPT]);
 
   if (!DEFAULT_SYSTEM_PROMPT) return null;
 
