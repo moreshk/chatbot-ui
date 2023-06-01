@@ -96,22 +96,35 @@ export const GET_CHATBOT_DETAILS = create<ChatbotDetailsStore>(set => ({
 export const GET_DEFAULT_SYSTEM_PROMPT = create<{ DEFAULT_SYSTEM_PROMPT: string, setDefaultSystemPrompt: () => Promise<void> }>((set) => ({
   DEFAULT_SYSTEM_PROMPT: "",
   setDefaultSystemPrompt: async () => {
+
     const chatbotId = Router.query.chatbotId;
-    const { setChatQuestions, questions } = GET_CHAT_QUESTIONS();
-    const { setChatbotDetails, name, about_us, business_name } = GET_CHATBOT_DETAILS();
+    const { data, error } = await supabase.from('chat_questions').select('question, question_number').eq('chatbot_id', chatbotId);
+    
+    const { data:data1, error:error1 } = await supabase
+    .from('chatbots')
+    .select('name, about_us, business_name')
+    .eq('id', chatbotId);
 
-    // Ensure questions and chatbot details are fetched and stored first
-    await Promise.all([setChatQuestions(), setChatbotDetails()]);
-
-    // Concatenate all questions into a single string with their question numbers
-    const questionsString = questions.map(q => `${q.number}. ${q.text}`).join(" ");
-
-    // Create the string
-    const myString = `You are ${name}, an AI enabled business sales representative for ${business_name} , ${about_us}. Your job is to collect requirements from potential business clients who chat with you. Start each conversation with a: Hey, welcome to ${business_name}. How can I help you today? 
+    if (error && error1) {
+      console.log(error || error1);
+      return;
+    }
+    if (data && data.length && data1 && data1.length) {
+      const sortedData = data.sort((a, b) => a.question_number - b.question_number);
+      const questionsArray = sortedData.map(item => ({ number: item.question_number, text: item.question }));
+      // set({ questions: questionsArray });
+      const questionsString = questionsArray.map(q => `${q.number}. ${q.text}`).join(" ");
+      const name = data1[0]?.name;
+      const business_name = data1[0]?.business_name;
+      const about_us = data1[0]?.about_us;
+      
+      const myString = `You are ${name}, an AI enabled business sales representative for ${business_name} , ${about_us}. Your job is to collect requirements from potential business clients who chat with you. Start each conversation with a: Hey, welcome to ${business_name}. How can I help you today? 
       Only once the user responds, ask if you can collect the user's name and email to better assist them with their enquiry. If they don't provide their details, continue with the data collection steps and ask again later.
       You have to collect data points from the clients for the following: ${questionsString}. Your job is to respond to user queries and ask follow up questions until you have all the information necessary to satisfy a search based upon the above attributes. If the user didn't provide their contact information earlier, ask them to provide their email so someone can get in touch. Once you have the required information, thank the user for their time and mention someone will be in touch, then ask if you can help with anything else. 
       Limit your responses to no more than one or two lines at a time and collect information from the user by asking one question at a time only while engaging the user in a conversation. Respond using markdown. `;
+      set({ DEFAULT_SYSTEM_PROMPT: myString });
+    }
+  
 
-    set({ DEFAULT_SYSTEM_PROMPT: myString });
   }
 }));
