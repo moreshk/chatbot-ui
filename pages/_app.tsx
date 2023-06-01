@@ -14,8 +14,8 @@ import '@/styles/globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 function App({ Component, pageProps }: AppProps<{}>) {
-  const { setDefaultSystemPrompt, DEFAULT_SYSTEM_PROMPT } =
-    GET_DEFAULT_SYSTEM_PROMPT();
+  // const { setDefaultSystemPrompt, DEFAULT_SYSTEM_PROMPT } = GET_DEFAULT_SYSTEM_PROMPT();
+  const { setDefaultSystemPrompt, DEFAULT_SYSTEM_PROMPT } = useStore(GET_DEFAULT_SYSTEM_PROMPT);
   const queryClient = new QueryClient();
  
 
