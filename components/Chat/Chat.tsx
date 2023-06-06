@@ -43,7 +43,12 @@ import { supabase } from '@/lib/supabase';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 // console.log(supabaseUrl)
-async function insertUserResponse(query: string, response: string) {
+import { v4 as uuidv4 } from 'uuid';
+
+let sessionID = uuidv4(); // Generate a new UUID for the session
+
+
+async function insertUserResponse(query: string, response: string, sessionID: string) {
   const router = Router;
   const chatbotId = router.query.chatbotId;
   console.log('I am in the insert user function');
@@ -57,6 +62,7 @@ async function insertUserResponse(query: string, response: string) {
         bot_answer: response,
         created_at: new Date(),
         chatbot_id: chatbotId,
+        session_id: sessionID
       },
     ]);
 
@@ -107,6 +113,14 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const [sessionID, setSessionID] = useState<string>();
+
+  // Generate a new UUID for the session when the Chat component mounts
+  useEffect(() => {
+    setSessionID(uuidv4());
+  }, []);
+
 
   const handleSend = useCallback(
     async (message: Message, deleteCount = 0, plugin: Plugin | null = null) => {
@@ -241,7 +255,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
 
           //New code
           console.log('Inserting question from user and response...');
-          insertUserResponse(message.content, text);
+          insertUserResponse(message.content, text, sessionID);
           //END
 
           saveConversation(updatedConversation);
