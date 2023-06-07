@@ -51,7 +51,9 @@ import { v4 as uuidv4 } from 'uuid';
 const getSessionId = () => {
   try {
     // localStorage.setItem('koretex-ai-session', 'value');
-    const currentSession = localStorage.getItem('kortex-ai-session');
+    const currentSession = localStorage.getItem('koretex-ai-session');
+    console.log('current session', currentSession);
+
     if (currentSession) {
       return currentSession;
     } else {
