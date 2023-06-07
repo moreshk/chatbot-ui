@@ -48,17 +48,24 @@ import { v4 as uuidv4 } from 'uuid';
 // let sessionID = uuidv4(); // Generate a new UUID for the session
 // console.log('session id', sessionID);
 
-const getSessionId = ()=>{
-  try{
-localStorage.setItem('koretex-ai-session', 'value');
-const currentSession = localStorage.getItem('kortex-ai-session')
-return currentSession;
-  }catch(e){
-    const session = uuidv4()
-    localStorage.setItem('koretex-ai-session', session)
-    return session
+const getSessionId = () => {
+  try {
+    // localStorage.setItem('koretex-ai-session', 'value');
+    const currentSession = localStorage.getItem('kortex-ai-session');
+    if (currentSession) {
+      return currentSession;
+    } else {
+      const session = uuidv4();
+      localStorage.setItem('koretex-ai-session', session);
+
+      return session
+    }
+  } catch (e) {
+    const session = uuidv4();
+    localStorage.setItem('koretex-ai-session', session);
+    return session;
   }
-}
+};
 
 async function insertUserResponse(query: string, response: string) {
   const router = Router;
@@ -258,7 +265,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             }
           }
 
-          
+
           //New code
           console.log('Inserting question from user and response...');
           insertUserResponse(message.content, text);
