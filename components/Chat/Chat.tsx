@@ -45,10 +45,22 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 // console.log(supabaseUrl)
 import { v4 as uuidv4 } from 'uuid';
 
-let sessionID = uuidv4(); // Generate a new UUID for the session
-console.log('session id', sessionID);
+// let sessionID = uuidv4(); // Generate a new UUID for the session
+// console.log('session id', sessionID);
 
-async function insertUserResponse(query: string, response: string, sessionID: string) {
+const getSessionId = ()=>{
+  try{
+localStorage.setItem('koretex-ai-session', 'value');
+const currentSession = localStorage.getItem('kortex-ai-session')
+return currentSession;
+  }catch(e){
+    const session = uuidv4()
+    localStorage.setItem('koretex-ai-session', session)
+    return session
+  }
+}
+
+async function insertUserResponse(query: string, response: string) {
   const router = Router;
   const chatbotId = router.query.chatbotId;
   console.log('I am in the insert user function');
@@ -62,7 +74,7 @@ async function insertUserResponse(query: string, response: string, sessionID: st
         bot_answer: response,
         created_at: new Date(),
         chatbot_id: chatbotId,
-        session_id: sessionID
+        session_id: getSessionId()
       },
     ]);
 
@@ -113,13 +125,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const [sessionID, setSessionID] = useState<string>();
-
-  // Generate a new UUID for the session when the Chat component mounts
-  useEffect(() => {
-    setSessionID(uuidv4());
-  }, []);
 
 
   const handleSend = useCallback(
@@ -253,9 +258,10 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             }
           }
 
+          
           //New code
           console.log('Inserting question from user and response...');
-          insertUserResponse(message.content, text, '1');
+          insertUserResponse(message.content, text);
           //END
 
           saveConversation(updatedConversation);
