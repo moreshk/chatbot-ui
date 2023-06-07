@@ -46,7 +46,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 import { v4 as uuidv4 } from 'uuid';
 
 let sessionID = uuidv4(); // Generate a new UUID for the session
-
+console.log('session id', sessionID);
 
 async function insertUserResponse(query: string, response: string, sessionID: string) {
   const router = Router;
@@ -255,7 +255,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
 
           //New code
           console.log('Inserting question from user and response...');
-          insertUserResponse(message.content, text, sessionID);
+          insertUserResponse(message.content, text, '1');
           //END
 
           saveConversation(updatedConversation);
