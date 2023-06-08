@@ -338,6 +338,13 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
     }
   }, [autoScrollEnabled]);
 
+  const handleScrollDownOnmessageSubmit = () => {
+    chatContainerRef.current?.scrollTo({
+      top: chatContainerRef.current.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
   const handleScroll = () => {
     if (chatContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } =
@@ -558,6 +565,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             textareaRef={textareaRef}
             onSend={(message, plugin) => {
               setCurrentMessage(message);
+              handleScrollDownOnmessageSubmit();
               handleSend(message, 0, plugin);
             }}
             onScrollDownClick={handleScrollDown}
