@@ -1,4 +1,4 @@
-import { IconPlus } from '@tabler/icons-react';
+import { IconX } from '@tabler/icons-react';
 import { FC } from 'react';
 
 import { Conversation } from '@/types/chat';
@@ -17,12 +17,18 @@ export const Navbar: FC<Props> = ({
       <div className="mr-4"></div>
 
       <div className="max-w-[240px] overflow-hidden text-ellipsis whitespace-nowrap">
-        {selectedConversation.name}
+        {/* {selectedConversation.name} */}Chat bot
       </div>
 
-      <IconPlus
+      <IconX
         className="cursor-pointer hover:text-neutral-400 mr-0"
-        onClick={onNewConversation}
+        onClick={() => {
+          // @ts-ignore
+          if (window?.closeChatBotBubble) {
+            // @ts-ignore
+            window?.closeChatBotBubble();
+          }
+        }}
       />
     </nav>
   );
