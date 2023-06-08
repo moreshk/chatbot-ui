@@ -493,16 +493,10 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                 ) : (
                   <div className="px-2 py-3">
                     <div className="w-full bg-gray-50 bg-gradient-to-b from-gray-600 rounded-md p-4">
-                      <img
-                        src="https://koretex.vercel.app/Koretex.svg"
-                        width={200}
-                      />
                       <div className="mt-10">
-                        <p>{initial_message || 'Welcome to chat bot'}</p>
-                      </div>
-                      <div className="bg-white rounded-lg text-gray-800 mt-5 p-4">
-                        <p>{business_name}</p>
-                        <p>{about_us}</p>
+                        <p className="text-2xl font-bold">
+                          {initial_message || 'Welcome to chat bot'}
+                        </p>
                       </div>
                     </div>
                   </div>
