@@ -1,4 +1,4 @@
-import { IconX } from '@tabler/icons-react';
+import { IconPlus, IconX } from '@tabler/icons-react';
 import { FC } from 'react';
 
 import { Conversation } from '@/types/chat';
@@ -19,17 +19,22 @@ export const Navbar: FC<Props> = ({
       <div className="max-w-[240px] overflow-hidden text-ellipsis whitespace-nowrap">
         {/* {selectedConversation.name} */}Chat bot
       </div>
-
-      <IconX
-        className="cursor-pointer hover:text-neutral-400 mr-0"
-        onClick={() => {
-          // @ts-ignore
-          if (window?.closeChatBotBubble) {
+      <div className="flex items-center gap-3">
+        <IconPlus
+          className="cursor-pointer hover:text-neutral-400 mr-0"
+          onClick={onNewConversation}
+        />
+        <IconX
+          className="cursor-pointer hover:text-neutral-400 mr-0"
+          onClick={() => {
             // @ts-ignore
-            window?.closeChatBotBubble();
-          }
-        }}
-      />
+            if (window?.closeChatBotBubble) {
+              // @ts-ignore
+              window?.closeChatBotBubble();
+            }
+          }}
+        />
+      </div>
     </nav>
   );
 };
