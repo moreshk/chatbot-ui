@@ -14,6 +14,7 @@ import { useTranslation } from 'next-i18next';
 import Router from 'next/router';
 
 import { getEndpoint } from '@/utils/app/api';
+import { GET_CHATBOT_DETAILS } from '@/utils/app/const';
 import {
   saveConversation,
   saveConversations,
@@ -39,11 +40,12 @@ import { TemperatureSlider } from './Temperature';
 //New Code
 import { ApplicationError, UserError } from '@/lib/errors';
 import { supabase } from '@/lib/supabase';
+// console.log(supabaseUrl)
+import { v4 as uuidv4 } from 'uuid';
+import { useStore } from 'zustand';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-// console.log(supabaseUrl)
-import { v4 as uuidv4 } from 'uuid';
 
 // let sessionID = uuidv4(); // Generate a new UUID for the session
 // console.log('session id', sessionID);
@@ -60,7 +62,7 @@ const getSessionId = () => {
       const session = uuidv4();
       localStorage.setItem('koretex-ai-session', session);
 
-      return session
+      return session;
     }
   } catch (e) {
     const session = uuidv4();
@@ -83,7 +85,7 @@ async function insertUserResponse(query: string, response: string) {
         bot_answer: response,
         created_at: new Date(),
         chatbot_id: chatbotId,
-        session_id: getSessionId()
+        session_id: getSessionId(),
       },
     ]);
 
@@ -107,7 +109,8 @@ interface Props {
 
 export const Chat = memo(({ stopConversationRef }: Props) => {
   const { t } = useTranslation('chat');
-
+  const { initial_message, business_name, about_us } =
+    useStore(GET_CHATBOT_DETAILS);
   const {
     state: {
       selectedConversation,
@@ -134,7 +137,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
 
   const handleSend = useCallback(
     async (message: Message, deleteCount = 0, plugin: Plugin | null = null) => {
@@ -266,7 +268,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
               });
             }
           }
-
 
           //New code
           console.log('Inserting question from user and response...');
@@ -474,17 +475,31 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           >
             {selectedConversation?.messages.length === 0 ? (
               <>
-                <div className="mx-auto flex flex-col space-y-5 md:space-y-10 px-3 pt-5 md:pt-12 sm:max-w-[600px]">
-                  <div className="text-center text-xl font-semibold text-gray-800 dark:text-gray-100">
-                    {models.length === 0 ? (
+                {models.length === 0 ? (
+                  <div className="mx-auto flex flex-col space-y-5 md:space-y-10 px-3 pt-5 md:pt-12 sm:max-w-[600px]">
+                    <div className="text-center text-xl font-semibold text-gray-800 dark:text-gray-100">
                       <div>
                         <Spinner size="16px" className="mx-auto" />
                       </div>
-                    ) : (
-                      'Koretex SmartBot'
-                    )}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="px-2 py-3">
+                    <div className="w-full bg-gray-50 bg-gradient-to-b from-gray-600 rounded-md p-4">
+                      <img
+                        src="https://koretex.vercel.app/Koretex.svg"
+                        width={200}
+                      />
+                      <div className="mt-10">
+                        <p>{initial_message || 'Welcome to chat bot'}</p>
+                      </div>
+                      <div className="bg-white rounded-lg text-gray-800 mt-5 p-4">
+                        <p>{business_name}</p>
+                        <p>{about_us}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </>
             ) : (
               <>
