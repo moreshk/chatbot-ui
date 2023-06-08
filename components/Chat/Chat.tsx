@@ -492,9 +492,9 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                   </div>
                 ) : (
                   <div className="px-2 py-3">
-                    <div className="w-full bg-gray-50 bg-gradient-to-b from-gray-600 rounded-md p-4">
-                      <div className="mt-10">
-                        <p className="text-2xl font-bold">
+                    <div className="w-full bg-gray-50 bg-gradient-to-b from-gray-600 rounded-md p-4 h-14">
+                      <div>
+                        <p className="text-2xl font-bold text-white">
                           {initial_message || 'Welcome to chat bot'}
                         </p>
                       </div>
