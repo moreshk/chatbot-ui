@@ -97,11 +97,58 @@ async function insertUserResponse(query: string, response: string) {
     } else {
       console.log('User response inserted successfully:', data);
     }
+
+    const phoneRegex = new RegExp('\\+?\\s?\\(?\\d{1,4}?\\)?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}', 'g');
+    const emailRegex = new RegExp('\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b', 'g');
+
+    const emailID = query.match(emailRegex);
+
+    if (emailID) {
+      console.log('emails : ', emailID);
+      insertLeads({ email:emailID[0] });
+    }
+
+    const phoneNumber = query.match(phoneRegex);
+
+    if (phoneNumber) {
+      console.log('Phone : ', phoneNumber);
+      insertLeads({ phone:phoneNumber[0] });
+      }
+      
   } catch (error) {
     console.error('Error inserting user response:', error);
   }
 }
 //END
+
+async function insertLeads({ email, phone }: { email?: string, phone?: string }) {
+  if (email) {
+    const { data, error } = await supabase.from('leads').insert([
+      {
+        email,
+        created_at: new Date(),
+        chat_session_id: getSessionId()
+      },
+    ]);
+  
+    console.log('Data:', data);
+    console.log('Error:', error);
+  }
+  
+  if (phone) {
+    const { data, error } = await supabase.from('leads').insert([
+      {
+        phone,
+        created_at: new Date(),
+        chat_session_id: getSessionId()
+      },
+    ]);
+  
+    console.log('Data:', data);
+    console.log('Error:', error);
+  }
+
+}
 
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
