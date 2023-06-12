@@ -114,7 +114,6 @@ async function insertUserResponse(query: string, response: string) {
     //   console.log('Phone : ', phoneNumber);
     //   insertLeads({ phone:phoneNumber[0] });
     //   }
-
   } catch (error) {
     console.error('Error inserting user response:', error);
   }
@@ -130,11 +129,11 @@ async function insertUserResponse(query: string, response: string) {
 //         chat_session_id: getSessionId()
 //       },
 //     ]);
-  
+
 //     console.log('Data:', data);
 //     console.log('Error:', error);
 //   }
-  
+
 //   if (phone) {
 //     const { data, error } = await supabase.from('leads').insert([
 //       {
@@ -143,7 +142,7 @@ async function insertUserResponse(query: string, response: string) {
 //         chat_session_id: getSessionId()
 //       },
 //     ]);
-  
+
 //     console.log('Data:', data);
 //     console.log('Error:', error);
 //   }
@@ -539,7 +538,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                   </div>
                 ) : (
                   <div className="px-2 py-3">
-                    <div className="w-full rounded-md p-4 h-14">
+                    <div className="w-full rounded-md p-4 h-full">
                       <div>
                         <p className="text-2xl font-bold text-gray-900">
                           {initial_message || 'Welcome to chat bot'}
