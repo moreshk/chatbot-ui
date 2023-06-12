@@ -178,7 +178,7 @@ export const ChatMessage: FC<Props> = memo(
                   </div>
                 ) : ( */}
                 <div className="flex justify-end ml-20">
-                  <div className="rounded-lg bg-gray-100 py-3 px-4 text-base font-light text-gray-900">
+                  <div className="rounded-lg bg-indigo-600 py-3 px-4 text-base font-light text-white">
                     {message.content}
                   </div>
                 </div>
@@ -207,7 +207,7 @@ export const ChatMessage: FC<Props> = memo(
             ) : (
               <div className="flex flex-row gap-2">
                 <MemoizedReactMarkdown
-                  className="bg-blue-500 text-white rounded-lg mr-20  py-3 px-4 font-light"
+                  className=" bg-gray-100 text-gray-900 rounded-lg mr-20  py-3 px-4 font-light"
                   remarkPlugins={[remarkGfm, remarkMath]}
                   rehypePlugins={[rehypeMathjax]}
                   components={{
