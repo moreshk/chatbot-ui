@@ -178,7 +178,7 @@ export const ChatMessage: FC<Props> = memo(
                   </div>
                 ) : ( */}
                 <div className="flex justify-end ml-20">
-                  <div className="rounded-lg bg-indigo-600 py-3 px-4 text-base font-light text-white">
+                  <div className="rounded-lg bg-blue-500 py-3 px-4 text-base font-light text-white">
                     {message.content}
                   </div>
                 </div>
