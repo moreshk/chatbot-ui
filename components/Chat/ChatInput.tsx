@@ -70,6 +70,9 @@ export const ChatInput = ({
     prompt.name.toLowerCase().includes(promptInputValue.toLowerCase()),
   );
 
+  useEffect(() => {
+    textareaRef.current?.focus();
+  }, [textareaRef.current]);
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     const maxLength = selectedConversation?.model.maxLength;
@@ -100,6 +103,7 @@ export const ChatInput = ({
 
     onSend({ role: 'user', content }, plugin);
     setContent('');
+    textareaRef.current?.focus();
     setPlugin(null);
 
     if (window.innerWidth < 640 && textareaRef && textareaRef.current) {
