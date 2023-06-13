@@ -18,6 +18,8 @@ iframe.style.borderRadius = '0.75rem';
 iframe.style.zIndex = '999999998';
 iframe.style.overflow = 'hidden';
 iframe.style.left = 'unset';
+iframe.style.transition = 'all 0.5s ease-in-out';
+iframe.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)';
 
 const button = document.createElement('button');
 button.addEventListener('click', () => {
@@ -32,7 +34,7 @@ img.style.animation = 'pulsate 1s infinite';
 
 const keyframes = `@keyframes pulsate {
   0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  50% { transform: scale(1.1); }
   100% { transform: scale(1); }
 }`;
 
