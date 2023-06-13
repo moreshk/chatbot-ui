@@ -1,7 +1,9 @@
 import { Conversation } from '@/types/chat';
 import { OpenAIModelID, OpenAIModels } from '@/types/openai';
 
-import { GET_DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from './const';
+import { GET_DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE, GET_CHATBOT_DETAILS  } from './const';
+
+const temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
 
 export const cleanSelectedConversation = (conversation: Conversation) => {
   // added model for each conversation (3/20/23)
@@ -31,7 +33,7 @@ export const cleanSelectedConversation = (conversation: Conversation) => {
   if (!updatedConversation.temperature) {
     updatedConversation = {
       ...updatedConversation,
-      temperature: updatedConversation.temperature || DEFAULT_TEMPERATURE,
+      temperature: updatedConversation.temperature || temperatureToUse,
     };
   }
 
@@ -75,7 +77,7 @@ export const cleanConversationHistory = (history: any[]): Conversation[] => {
       }
 
       if (!conversation.temperature) {
-        conversation.temperature = DEFAULT_TEMPERATURE;
+        conversation.temperature = temperatureToUse;
       }
 
       if (!conversation.folderId) {

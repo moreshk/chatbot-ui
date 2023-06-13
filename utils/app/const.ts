@@ -10,7 +10,7 @@ export const OPENAI_API_HOST =
   process.env.OPENAI_API_HOST || 'https://api.openai.com';
 
 export const DEFAULT_TEMPERATURE =
-  parseFloat(process.env.NEXT_PUBLIC_DEFAULT_TEMPERATURE || "1");
+  parseFloat(process.env.NEXT_PUBLIC_DEFAULT_TEMPERATURE || "0");
 
 export const OPENAI_API_TYPE =
   process.env.OPENAI_API_TYPE || 'openai';
@@ -23,26 +23,6 @@ export const OPENAI_ORGANIZATION =
 
 export const AZURE_DEPLOYMENT_ID =
   process.env.AZURE_DEPLOYMENT_ID || '';
-
-// export const GET_DEFAULT_SYSTEM_PROMPT = create<{ DEFAULT_SYSTEM_PROMPT: string, setDefaultSystemPrompt: () => void }>((set) => ({
-//   DEFAULT_SYSTEM_PROMPT: "",
-//   setDefaultSystemPrompt: async () => {
-//     const chatbotId = Router.query.chatbotId;
-
-//     // Fetch and set the chatbot prompt
-//     const { data: promptData, error: promptError } = await supabase.from('chatbots').select('prompt').eq('id', chatbotId)
-//     if (promptError) {
-//       console.log(promptError)
-//       return
-//     }
-//     if (promptData) {
-//       set({ DEFAULT_SYSTEM_PROMPT: promptData[0].prompt })
-//     } else {
-//       set({ DEFAULT_SYSTEM_PROMPT: 'hello' })
-//     }
-
-//   }
-// }))
 
 type ChatQuestionStore = {
   questions: { number: number, text: string }[],
@@ -71,6 +51,7 @@ type ChatbotDetailsStore = {
   about_us: string,
   business_name: string,
   initial_message: string,
+  temperature: number,
   setChatbotDetails: () => Promise<void>,
 };
 
@@ -79,11 +60,12 @@ export const GET_CHATBOT_DETAILS = create<ChatbotDetailsStore>(set => ({
   about_us: "",
   business_name: "",
   initial_message: '',
+  temperature: 0,
   setChatbotDetails: async () => {
     const chatbotId = Router.query.chatbotId;
     const { data, error } = await supabase
       .from('chatbots')
-      .select('name, about_us, business_name, initial_message')
+      .select('name, about_us, business_name, initial_message, temperature')
       .eq('id', chatbotId);
     if (error) {
       console.log(error);
@@ -130,3 +112,30 @@ export const GET_DEFAULT_SYSTEM_PROMPT = create<{ DEFAULT_SYSTEM_PROMPT: string,
 
   }
 }));
+
+
+// export const GET_DEFAULT_TEMPERATURE = create<{ DEFAULT_TEMPERATURE: number, setDefaultTemperature: () => Promise<void> }>((set) => ({
+//   DEFAULT_TEMPERATURE: 0,
+//   setDefaultTemperature: async () => {
+
+//     const chatbotId = Router.query.chatbotId;
+
+//     const { data, error } = await supabase
+//       .from('chatbots')
+//       .select('temperature')
+//       .eq('id', chatbotId);
+
+//     if (error) {
+//       console.log(error);
+//       set({ DEFAULT_TEMPERATURE: 0 });
+//       return;
+//     }
+
+//     if (data && data.length) {
+//       const temperature = data[0]?.temperature;
+//       set({ DEFAULT_TEMPERATURE: temperature });
+//     } else {
+//       set({ DEFAULT_TEMPERATURE: 0 });
+//     }
+//   }
+// }));

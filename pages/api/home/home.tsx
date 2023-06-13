@@ -17,7 +17,7 @@ import {
 } from '@/utils/app/clean';
 import {
   DEFAULT_TEMPERATURE,
-  GET_DEFAULT_SYSTEM_PROMPT,
+  GET_DEFAULT_SYSTEM_PROMPT,GET_CHATBOT_DETAILS
 } from '@/utils/app/const';
 import {
   saveConversation,
@@ -181,8 +181,13 @@ const Home = ({
 
   // CONVERSATION OPERATIONS  --------------------------------------------
 
+  const temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
+  
   const handleNewConversation = () => {
     const lastConversation = conversations[conversations.length - 1];
+
+
+
 
     const newConversation: Conversation = {
       id: uuidv4(),
@@ -195,7 +200,7 @@ const Home = ({
         tokenLimit: OpenAIModels[defaultModelId].tokenLimit,
       },
       prompt: GET_DEFAULT_SYSTEM_PROMPT.getState().DEFAULT_SYSTEM_PROMPT,
-      temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
+      temperature: lastConversation?.temperature ?? temperatureToUse,
       folderId: null,
     };
 
@@ -339,7 +344,7 @@ const Home = ({
           messages: [],
           model: OpenAIModels[defaultModelId],
           prompt: GET_DEFAULT_SYSTEM_PROMPT.getState().DEFAULT_SYSTEM_PROMPT,
-          temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
+          temperature: lastConversation?.temperature ?? temperatureToUse,
           folderId: null,
         },
       });

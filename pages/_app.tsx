@@ -28,7 +28,7 @@ function App({ Component, pageProps }: AppProps<{}>) {
   // const { setChatQuestions, questions } = GET_CHAT_QUESTIONS();
 
   const { setChatQuestions, questions } = useStore(GET_CHAT_QUESTIONS);
-  const { setChatbotDetails, name, about_us, business_name } =
+  const { setChatbotDetails, name, about_us, business_name, temperature } =
     useStore(GET_CHATBOT_DETAILS);
 
   // // Call the function to update the questions array
@@ -48,6 +48,7 @@ function App({ Component, pageProps }: AppProps<{}>) {
   console.log('About us:', about_us);
   console.log('Questions', questionsString);
   console.log('Business name:', business_name);
+  console.log('Temperature', temperature);
 
   // Create the string
   const myString = `You are ${name}, an AI enabled business sales representative for ${business_name}, ${about_us}. Your job is to collect requirements from potential business clients who chat with you. Start each conversation with a: Hey, welcome to ${business_name}. How can I help you today?

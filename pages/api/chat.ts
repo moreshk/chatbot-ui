@@ -1,4 +1,4 @@
-import { GET_DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '@/utils/app/const';
+import { GET_DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE, GET_CHATBOT_DETAILS } from '@/utils/app/const';
 import { OpenAIError, OpenAIStream } from '@/utils/server';
 
 import { ChatBody, Message } from '@/types/chat';
@@ -51,6 +51,9 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     encoding.free();
+
+    temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
+
 
     const stream = await OpenAIStream(model, promptToSend, temperatureToUse, key, messagesToSend);
 
