@@ -27,8 +27,8 @@ button.addEventListener('click', () => {
 });
 const img = document.createElement('img');
 img.src = 'https://dashboard.koretex.ai/bubble.svg';
-img.style.width = '80px';
-img.style.height = '80px';
+img.style.width = '50px';
+img.style.height = '50px';
 img.style.borderRadius = '100%';
 img.style.animation = 'pulsate 1s infinite';
 

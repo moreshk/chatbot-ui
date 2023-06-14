@@ -29,16 +29,7 @@ export const Navbar: FC<Props> = ({
           className="cursor-pointer hover:text-neutral-400 mr-0"
           onClick={onNewConversation}
         />
-        <IconX
-          className="cursor-pointer hover:text-neutral-400 mr-0"
-          onClick={() => {
-            // @ts-ignore
-            if (window?.closeChatBotBubble) {
-              // @ts-ignore
-              window?.closeChatBotBubble();
-            }
-          }}
-        />
+        <div className="w-5 h-5"></div>
       </div>
     </nav>
   );
