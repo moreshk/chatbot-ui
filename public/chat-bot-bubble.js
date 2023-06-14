@@ -1,114 +1,106 @@
-(function () {
-  // Inject the CSS
-  const style = document.createElement('style');
-  style.innerHTML = `
-  .hidden {
-    display: none;
+const container = document.createElement('div');
+
+const iframeContainer = document.createElement('div');
+iframeContainer.style.display = 'none';
+iframeContainer.id = 'my-iframeContainer';
+iframeContainer.style.border = 'none';
+iframeContainer.style.position = 'fixed';
+iframeContainer.style.width = '425px';
+iframeContainer.style.height = '70%';
+iframeContainer.style.borderRadius = '0.75rem';
+iframeContainer.style.zIndex = '999999998';
+iframeContainer.style.transition = 'all 0.5s ease-in-out';
+iframeContainer.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)';
+
+const iframe = document.createElement('iframe');
+const currentScript = document.currentScript;
+const chatbotId = currentScript.getAttribute('data-chatbot-id');
+iframe.src = `https://leadqualifier.koretex.ai/?chatbotId=${chatbotId}`;
+iframe.style.width = '100%';
+iframe.style.height = '100%';
+iframe.style.border = 'none';
+iframe.style.borderRadius = '0.75rem';
+
+const bubble = document.createElement('img');
+bubble.src = 'https://dashboard.koretex.ai/bubble.svg';
+bubble.style.width = '50px';
+bubble.style.height = '50px';
+bubble.style.borderRadius = '100%';
+bubble.style.animation = 'pulsate 1s infinite';
+
+const keyframes = `@keyframes pulsate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}`;
+
+const bubbleStyle = document.createElement('style');
+bubbleStyle.appendChild(document.createTextNode(keyframes));
+const bubbleBUtton = document.createElement('button');
+
+bubbleBUtton.style.border = 'none';
+bubbleBUtton.style.position = 'fixed';
+bubbleBUtton.style.flexDirection = 'column';
+bubbleBUtton.style.justifyContent = 'space-between';
+bubbleBUtton.style.bottom = '2rem';
+bubbleBUtton.style.right = '30px';
+bubbleBUtton.style.background = 'transparent';
+bubbleBUtton.style.borderRadius = '0.75rem';
+bubbleBUtton.style.display = 'flex';
+bubbleBUtton.style.zIndex = '999999997';
+bubbleBUtton.style.overflow = 'hidden';
+bubbleBUtton.style.left = 'unset';
+bubbleBUtton.style.cursor = 'pointer';
+bubbleBUtton.style.borderRadius = '100%';
+
+const xMark = document.createElement('div');
+xMark.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+  <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
+</svg>
+`;
+xMark.style.position = 'absolute';
+xMark.style.width = '28px';
+xMark.style.height = '28x';
+xMark.style.top = '10px';
+xMark.style.right = '12px';
+xMark.style.zIndex = '999999999';
+xMark.style.color = '#fff';
+xMark.style.cursor = 'pointer';
+xMark.style.display = 'none';
+
+xMark.addEventListener('click', () => {
+  xMark.style.display = xMark.style.display === 'none' ? 'block' : 'none';
+  iframeContainer.style.display =
+    iframeContainer.style.display === 'none' ? 'block' : 'none';
+});
+
+bubbleBUtton.addEventListener('click', () => {
+  xMark.style.display = xMark.style.display === 'none' ? 'block' : 'none';
+  iframeContainer.style.display =
+    iframeContainer.style.display === 'none' ? 'block' : 'none';
+});
+
+function updateIframeWidth() {
+  if (window.innerWidth < 525) {
+    console.log(window.innerWidth);
+    iframeContainer.style.width = '100%';
+    iframeContainer.style.height = '100vh';
+    iframeContainer.style.left = '0rem';
+    iframeContainer.style.bottom = '0rem';
+  } else {
+    iframeContainer.style.width = '425px';
+    iframeContainer.style.height = '75%';
+    iframeContainer.style.left = 'unset';
+    iframeContainer.style.right = '25px';
+    iframeContainer.style.bottom = '100px';
   }
-  #chat-widget-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    flex-direction: column;
-  }
-  #close-popup{
-    z-index: 999999999;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    color: #fff;
-    cursor: pointer;
-    position: absolute;
-    top: 9px;
-    right: 12px;
-    width: 40px;
-    height: 32px;
-  }
-
-  #chat-bubble {
-    cursor: pointer;
-    z-index: 999999999;
-  }
-  #chat-popup {
-    height: 70vh;
-    max-height: 70vh;
-    transition: all 0.3s;
-    overflow: hidden;
-    z-index: 999999999;
-    position: absolute;
-    bottom: 55px;
-    right: 0px;
-    width: 384px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    display: none;
-    flex-direction: column;
-    transition: all 0.3s;
-    font-size: 14px;
-  }
-  #chat-iframe {
-    display: flex;
-    z-index: 10;
-    flex-grow: 1;
-    border: none;
-  }
-  @media (max-width: 768px) {
-    #chat-popup {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      max-height: 100%;
-      border-radius: 0;
-    }
-  }
-  `;
-
-  document.head.appendChild(style);
-
-  // Create chat widget container
-  const chatWidgetContainer = document.createElement('div');
-  chatWidgetContainer.id = 'chat-widget-container';
-  document.body.appendChild(chatWidgetContainer);
-
-  const currentScript = document.currentScript;
-  const chatbotId = currentScript.getAttribute('data-chatbot-id');
-  const src = `https://leadqualifier.koretex.ai/?chatbotId=${chatbotId}`;
-
-  // Inject the HTML
-  chatWidgetContainer.innerHTML = `
-    <div id="chat-bubble" class="w-6 h-6  cursor-pointer text-3xl">
-      <img src="https://dashboard.koretex.ai/bubble.svg" width="40px" height="40px" />
-    </div>
-    <div id="chat-popup">
-        <button id="close-popup">
-         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <iframe id="chat-iframe"  src=${src}></iframe>
-    </div>
-  `;
-
-  // Add event listeners
-  const chatBubble = document.getElementById('chat-bubble');
-  const closePopup = document.getElementById('close-popup');
-
-  chatBubble.addEventListener('click', function () {
-    togglePopup();
-  });
-
-  closePopup.addEventListener('click', function () {
-    togglePopup();
-  });
-
-  function togglePopup() {
-    const chatPopup = document.getElementById('chat-popup');
-    chatPopup.style.display =
-      chatPopup.style.display === 'none' ? 'flex' : 'none';
-  }
-})();
+}
+updateIframeWidth();
+window.addEventListener('resize', updateIframeWidth);
+iframeContainer.appendChild(xMark);
+bubbleBUtton.appendChild(bubble);
+iframeContainer.appendChild(iframe);
+container.appendChild(bubbleBUtton);
+container.appendChild(iframeContainer);
+document.head.appendChild(bubbleStyle);
+document.body.appendChild(container);
