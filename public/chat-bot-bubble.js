@@ -1,9 +1,4 @@
 (function () {
-  document.head.insertAdjacentHTML(
-    'beforeend',
-    '<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css" rel="stylesheet">',
-  );
-
   // Inject the CSS
   const style = document.createElement('style');
   style.innerHTML = `
@@ -18,6 +13,21 @@
   }
   #close-popup{
     z-index: 999999999;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    top: 9px;
+    right: 12px;
+    width: 40px;
+    height: 32px;
+  }
+
+  #chat-bubble {
+    cursor: pointer;
+    z-index: 999999999;
   }
   #chat-popup {
     height: 70vh;
@@ -25,6 +35,23 @@
     transition: all 0.3s;
     overflow: hidden;
     z-index: 999999999;
+    position: absolute;
+    bottom: 55px;
+    right: 0px;
+    width: 384px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s;
+    font-size: 14px;
+  }
+  #chat-iframe {
+    display: flex;
+    z-index: 10;
+    flex-grow: 1;
+    border: none;
   }
   @media (max-width: 768px) {
     #chat-popup {
@@ -54,16 +81,16 @@
 
   // Inject the HTML
   chatWidgetContainer.innerHTML = `
-    <div id="chat-bubble" class="w-16 h-16  cursor-pointer text-3xl">
-      <img src="https://dashboard.koretex.ai/bubble.svg"/>
+    <div id="chat-bubble" class="w-6 h-6  cursor-pointer text-3xl">
+      <img src="https://dashboard.koretex.ai/bubble.svg" width="40px" height="40px" />
     </div>
-    <div id="chat-popup" class="hidden absolute bottom-20 right-0 w-96 bg-white rounded-md shadow-md flex flex-col transition-all text-sm">
-        <button id="close-popup" class="bg-transparent border-none text-white cursor-pointer absolute right-3 top-3 ">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <div id="chat-popup">
+        <button id="close-popup">
+         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <iframe id="chat-iframe"  src=${src} class="flex-grow z-10"></iframe>
+        <iframe id="chat-iframe"  src=${src}></iframe>
     </div>
   `;
 
@@ -81,6 +108,7 @@
 
   function togglePopup() {
     const chatPopup = document.getElementById('chat-popup');
-    chatPopup.classList.toggle('hidden');
+    chatPopup.style.display =
+      chatPopup.style.display === 'none' ? 'flex' : 'none';
   }
 })();
