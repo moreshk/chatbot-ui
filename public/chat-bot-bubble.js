@@ -42,7 +42,7 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    display: flex;
+    display: none;
     flex-direction: column;
     transition: all 0.3s;
     font-size: 14px;
