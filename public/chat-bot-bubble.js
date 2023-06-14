@@ -76,6 +76,7 @@ xMark.style.zIndex = '999999999';
 xMark.style.color = '#fff';
 xMark.style.display = 'none';
 xMark.addEventListener('click', () => {
+  xMark.style.display = xMark.style.display === 'none' ? 'block' : 'none';
   iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none';
 });
 
