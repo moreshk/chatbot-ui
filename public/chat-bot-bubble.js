@@ -21,10 +21,6 @@ iframe.style.left = 'unset';
 iframe.style.transition = 'all 0.5s ease-in-out';
 iframe.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)';
 
-const button = document.createElement('button');
-button.addEventListener('click', () => {
-  iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none';
-});
 const img = document.createElement('img');
 img.src = 'https://dashboard.koretex.ai/bubble.svg';
 img.style.width = '50px';
@@ -40,6 +36,8 @@ const keyframes = `@keyframes pulsate {
 
 const style = document.createElement('style');
 style.appendChild(document.createTextNode(keyframes));
+const button = document.createElement('button');
+
 document.head.appendChild(style);
 
 document.body.appendChild(img);
@@ -76,7 +74,12 @@ xMark.style.top = '10px';
 xMark.style.right = '22px';
 xMark.style.zIndex = '999999999';
 xMark.style.color = '#fff';
+xMark.style.display = 'none';
 xMark.addEventListener('click', () => {
+  iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none';
+});
+
+button.addEventListener('click', () => {
   xMark.style.display = xMark.style.display === 'none' ? 'block' : 'none';
   iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none';
 });
