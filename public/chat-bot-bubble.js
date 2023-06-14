@@ -16,11 +16,15 @@
     right: 20px;
     flex-direction: column;
   }
+  #close-popup{
+    z-index: 999999999;
+  }
   #chat-popup {
     height: 70vh;
     max-height: 70vh;
     transition: all 0.3s;
     overflow: hidden;
+    z-index: 999999999;
   }
   @media (max-width: 768px) {
     #chat-popup {
@@ -33,7 +37,6 @@
       height: 100%;
       max-height: 100%;
       border-radius: 0;
-      z-index: 2;
     }
   }
   `;
@@ -54,8 +57,8 @@
     <div id="chat-bubble" class="w-16 h-16  cursor-pointer text-3xl">
       <img src="https://dashboard.koretex.ai/bubble.svg"/>
     </div>
-    <div id="chat-popup" class="hidden absolute bottom-20 right-0 w-96 bg-white rounded-md shadow-md flex flex-col transition-all text-sm z-10">
-        <button id="close-popup" class="bg-transparent border-none text-white cursor-pointer absolute right-3 top-3 z-50">
+    <div id="chat-popup" class="hidden absolute bottom-20 right-0 w-96 bg-white rounded-md shadow-md flex flex-col transition-all text-sm">
+        <button id="close-popup" class="bg-transparent border-none text-white cursor-pointer absolute right-3 top-3 ">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
