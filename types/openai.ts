@@ -52,6 +52,6 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
 };
 
 export function getModelFromID(idString: string): OpenAIModel | undefined {
-  const modelID = OpenAIModelID[idString as keyof typeof OpenAIModelID];
-  return modelID ? OpenAIModels[modelID] : undefined;
+  // @ts-ignore
+  return OpenAIModels[idString]
 }
