@@ -1,9 +1,11 @@
 import { Conversation } from '@/types/chat';
-import { OpenAIModelID, OpenAIModels } from '@/types/openai';
+import { OpenAIModelID, OpenAIModels, getModelFromID } from '@/types/openai';
 
 import { GET_DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE, GET_CHATBOT_DETAILS  } from './const';
 
 const temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
+const modelIdString = GET_CHATBOT_DETAILS.getState().ai_model;
+const modelToUse = getModelFromID(modelIdString);
 
 export const cleanSelectedConversation = (conversation: Conversation) => {
   // added model for each conversation (3/20/23)
@@ -18,7 +20,9 @@ export const cleanSelectedConversation = (conversation: Conversation) => {
   if (!updatedConversation.model) {
     updatedConversation = {
       ...updatedConversation,
-      model: updatedConversation.model || OpenAIModels[OpenAIModelID.GPT_3_5],
+      model: 
+      // updatedConversation.model 
+      modelToUse || OpenAIModels[OpenAIModelID.GPT_3_5],
     };
   }
 

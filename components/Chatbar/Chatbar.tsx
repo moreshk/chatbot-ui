@@ -15,7 +15,7 @@ import { exportData, importData } from '@/utils/app/importExport';
 
 import { Conversation } from '@/types/chat';
 import { LatestExportFormat, SupportedExportFormats } from '@/types/export';
-import { OpenAIModels } from '@/types/openai';
+import { OpenAIModels, getModelFromID } from '@/types/openai';
 import { PluginKey } from '@/types/plugin';
 
 import HomeContext from '@/pages/api/home/home.context';
@@ -117,7 +117,8 @@ export const Chatbar = () => {
   };
 
   const temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
-  const modelToUse = GET_CHATBOT_DETAILS.getState().ai_model;
+  const modelIdString = GET_CHATBOT_DETAILS.getState().ai_model;
+  const modelToUse = getModelFromID(modelIdString);
 
   const handleClearConversations = () => {
     defaultModelId &&
@@ -127,8 +128,8 @@ export const Chatbar = () => {
           id: uuidv4(),
           name: t('New Conversation'),
           messages: [],
-          model: OpenAIModels[defaultModelId],
-          // model: modelToUse,
+          // model: OpenAIModels[defaultModelId],
+          model: modelToUse,
           prompt: DEFAULT_SYSTEM_PROMPT,
           temperature: temperatureToUse,
           folderId: null,
@@ -170,8 +171,8 @@ export const Chatbar = () => {
             id: uuidv4(),
             name: t('New Conversation'),
             messages: [],
-            model: OpenAIModels[defaultModelId],
-            // model: modelToUse,
+            // model: OpenAIModels[defaultModelId],
+            model: modelToUse,
             prompt: DEFAULT_SYSTEM_PROMPT,
             temperature: temperatureToUse,
             folderId: null,

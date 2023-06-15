@@ -50,3 +50,8 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
     tokenLimit: 16384,
   },
 };
+
+export function getModelFromID(idString: string): OpenAIModel | undefined {
+  const modelID = OpenAIModelID[idString as keyof typeof OpenAIModelID];
+  return modelID ? OpenAIModels[modelID] : undefined;
+}

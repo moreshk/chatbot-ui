@@ -5,7 +5,7 @@ import { useCreateReducer } from '@/hooks/useCreateReducer';
 
 import { savePrompts } from '@/utils/app/prompts';
 
-import { OpenAIModels } from '@/types/openai';
+import { OpenAIModels, getModelFromID } from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
 import HomeContext from '@/pages/api/home/home.context';
@@ -19,8 +19,13 @@ import PromptbarContext from './PromptBar.context';
 import { PromptbarInitialState, initialState } from './Promptbar.state';
 
 import { v4 as uuidv4 } from 'uuid';
+import { GET_CHATBOT_DETAILS } from '@/utils/app/const';
 
 const Promptbar = () => {
+
+  const modelIdString = GET_CHATBOT_DETAILS.getState().ai_model;
+  const modelToUse = getModelFromID(modelIdString);
+
   const { t } = useTranslation('promptbar');
 
   const promptBarContextValue = useCreateReducer<PromptbarInitialState>({
@@ -50,7 +55,8 @@ const Promptbar = () => {
         name: `Prompt ${prompts.length + 1}`,
         description: '',
         content: '',
-        model: OpenAIModels[defaultModelId],
+        // model: OpenAIModels[defaultModelId],
+        model: modelToUse || OpenAIModels[defaultModelId],
         folderId: null,
       };
 

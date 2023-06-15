@@ -31,7 +31,7 @@ import { getSettings } from '@/utils/app/settings';
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface, FolderType } from '@/types/folder';
-import { OpenAIModelID, OpenAIModels, fallbackModelID } from '@/types/openai';
+import { OpenAIModelID, OpenAIModels, fallbackModelID, getModelFromID } from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
 import { Chat } from '@/components/Chat/Chat';
@@ -43,6 +43,7 @@ import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
+
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
@@ -182,6 +183,8 @@ const Home = ({
   // CONVERSATION OPERATIONS  --------------------------------------------
 
   const temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
+  const modelIdString = GET_CHATBOT_DETAILS.getState().ai_model;
+  const modelToUse = getModelFromID(modelIdString);
   
   const handleNewConversation = () => {
     const lastConversation = conversations[conversations.length - 1];
@@ -193,7 +196,8 @@ const Home = ({
       id: uuidv4(),
       name: t('New Conversation'),
       messages: [],
-      model: lastConversation?.model || {
+      // model: lastConversation?.model 
+      model: modelToUse || {
         id: OpenAIModels[defaultModelId].id,
         name: OpenAIModels[defaultModelId].name,
         maxLength: OpenAIModels[defaultModelId].maxLength,
@@ -259,6 +263,7 @@ const Home = ({
   // ON LOAD --------------------------------------------
 
   useEffect(() => {
+
     const settings = getSettings();
     if (settings.theme) {
       dispatch({
@@ -323,12 +328,16 @@ const Home = ({
     }
 
     const selectedConversation = localStorage.getItem('selectedConversation');
+
+
+
     if (selectedConversation) {
       const parsedSelectedConversation: Conversation =
         JSON.parse(selectedConversation);
       const cleanedSelectedConversation = cleanSelectedConversation(
         parsedSelectedConversation,
       );
+
 
       dispatch({
         field: 'selectedConversation',
@@ -342,7 +351,7 @@ const Home = ({
           id: uuidv4(),
           name: t('New Conversation'),
           messages: [],
-          model: OpenAIModels[defaultModelId],
+          model: modelToUse || OpenAIModels[defaultModelId],
           prompt: GET_DEFAULT_SYSTEM_PROMPT.getState().DEFAULT_SYSTEM_PROMPT,
           temperature: lastConversation?.temperature ?? temperatureToUse,
           folderId: null,

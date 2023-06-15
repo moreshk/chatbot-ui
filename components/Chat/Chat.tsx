@@ -43,6 +43,7 @@ import { supabase } from '@/lib/supabase';
 // console.log(supabaseUrl)
 import { v4 as uuidv4 } from 'uuid';
 import { useStore } from 'zustand';
+import { getModelFromID } from '@/types/openai';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -109,8 +110,11 @@ interface Props {
 
 export const Chat = memo(({ stopConversationRef }: Props) => {
   const { t } = useTranslation('chat');
-  const { initial_message, business_name, about_us } =
+  const { initial_message, business_name, about_us, ai_model } =
     useStore(GET_CHATBOT_DETAILS);
+
+    const modelToUse = getModelFromID(ai_model);
+
   const {
     state: {
       selectedConversation,
@@ -164,7 +168,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         homeDispatch({ field: 'loading', value: true });
         homeDispatch({ field: 'messageIsStreaming', value: true });
         const chatBody: ChatBody = {
-          model: updatedConversation.model,
+          model: modelToUse || updatedConversation.model,
           messages: updatedConversation.messages,
           key: apiKey,
           prompt: updatedConversation.prompt,
