@@ -117,6 +117,7 @@ export const Chatbar = () => {
   };
 
   const temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
+  const modelToUse = GET_CHATBOT_DETAILS.getState().ai_model;
 
   const handleClearConversations = () => {
     defaultModelId &&
@@ -127,6 +128,7 @@ export const Chatbar = () => {
           name: t('New Conversation'),
           messages: [],
           model: OpenAIModels[defaultModelId],
+          // model: modelToUse,
           prompt: DEFAULT_SYSTEM_PROMPT,
           temperature: temperatureToUse,
           folderId: null,
@@ -169,6 +171,7 @@ export const Chatbar = () => {
             name: t('New Conversation'),
             messages: [],
             model: OpenAIModels[defaultModelId],
+            // model: modelToUse,
             prompt: DEFAULT_SYSTEM_PROMPT,
             temperature: temperatureToUse,
             folderId: null,

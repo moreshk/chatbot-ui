@@ -52,6 +52,7 @@ type ChatbotDetailsStore = {
   business_name: string,
   initial_message: string,
   temperature: number,
+  ai_model: string,
   setChatbotDetails: () => Promise<void>,
 };
 
@@ -61,11 +62,12 @@ export const GET_CHATBOT_DETAILS = create<ChatbotDetailsStore>(set => ({
   business_name: "",
   initial_message: '',
   temperature: 0,
+  ai_model: "gpt-3.5-turbo",
   setChatbotDetails: async () => {
     const chatbotId = Router.query.chatbotId;
     const { data, error } = await supabase
       .from('chatbots')
-      .select('name, about_us, business_name, initial_message, temperature')
+      .select('name, about_us, business_name, initial_message, temperature, ai_model')
       .eq('id', chatbotId);
     if (error) {
       console.log(error);
@@ -113,29 +115,3 @@ export const GET_DEFAULT_SYSTEM_PROMPT = create<{ DEFAULT_SYSTEM_PROMPT: string,
   }
 }));
 
-
-// export const GET_DEFAULT_TEMPERATURE = create<{ DEFAULT_TEMPERATURE: number, setDefaultTemperature: () => Promise<void> }>((set) => ({
-//   DEFAULT_TEMPERATURE: 0,
-//   setDefaultTemperature: async () => {
-
-//     const chatbotId = Router.query.chatbotId;
-
-//     const { data, error } = await supabase
-//       .from('chatbots')
-//       .select('temperature')
-//       .eq('id', chatbotId);
-
-//     if (error) {
-//       console.log(error);
-//       set({ DEFAULT_TEMPERATURE: 0 });
-//       return;
-//     }
-
-//     if (data && data.length) {
-//       const temperature = data[0]?.temperature;
-//       set({ DEFAULT_TEMPERATURE: temperature });
-//     } else {
-//       set({ DEFAULT_TEMPERATURE: 0 });
-//     }
-//   }
-// }));

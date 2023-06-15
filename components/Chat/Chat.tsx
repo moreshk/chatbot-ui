@@ -54,7 +54,7 @@ const getSessionId = () => {
   try {
     // localStorage.setItem('koretex-ai-session', 'value');
     const currentSession = localStorage.getItem('koretex-ai-session');
-    console.log('current session', currentSession);
+    // console.log('current session', currentSession);
 
     if (currentSession) {
       return currentSession;
@@ -74,9 +74,9 @@ const getSessionId = () => {
 async function insertUserResponse(query: string, response: string) {
   const router = Router;
   const chatbotId = router.query.chatbotId;
-  console.log('I am in the insert user function');
-  console.log('Query:', query);
-  console.log('Response:', response);
+  // console.log('I am in the insert user function');
+  // console.log('Query:', query);
+  // console.log('Response:', response);
 
   try {
     const { data, error } = await supabase.from('user_response').insert([
@@ -89,8 +89,8 @@ async function insertUserResponse(query: string, response: string) {
       },
     ]);
 
-    console.log('Data:', data);
-    console.log('Error:', error);
+    // console.log('Data:', data);
+    // console.log('Error:', error);
 
     if (error) {
       console.error('Error inserting user response:', error);

@@ -53,7 +53,7 @@ const handler = async (req: Request): Promise<Response> => {
     encoding.free();
 
     temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
-
+    const modelToUse = GET_CHATBOT_DETAILS.getState().ai_model;
 
     const stream = await OpenAIStream(model, promptToSend, temperatureToUse, key, messagesToSend);
 

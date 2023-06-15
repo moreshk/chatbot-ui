@@ -44,10 +44,10 @@ function App({ Component, pageProps }: AppProps<{}>) {
     .map((q) => `${q.number}. ${q.text}`)
     .join(' ');
 
-  console.log('Chatbot name:', name);
-  console.log('About us:', about_us);
-  console.log('Questions', questionsString);
-  console.log('Business name:', business_name);
+  // console.log('Chatbot name:', name);
+  // console.log('About us:', about_us);
+  // console.log('Questions', questionsString);
+  // console.log('Business name:', business_name);
   console.log('Temperature', temperature);
 
   // Create the string
@@ -55,8 +55,8 @@ function App({ Component, pageProps }: AppProps<{}>) {
 Only once the user responds, ask if you can collect the user's name and email to better assist them with their enquiry. If they don't provide their details, continue with the data collection steps and ask again later. You have to collect data points from the clients for the following: ${questionsString}. Your objective is to respond to user queries and ask follow up questions until you have all the information necessary to satisfy a search based upon the above attributes. If the user didn't provide their contact information earlier, ask them to provide their email so someone can get in touch. Once you have the required information, thank the user for their time and mention someone will be in touch, then ask if you can help with anything else.
 Limit your responses to no more than one or two lines at a time and collect information from the user by asking only one question at a time while engaging the user in a conversation. If the users asks a question that cannot be answered using only the information you have about your role as defined here, politely decline to answer and steer the conversation in a direction that will help you achieve your objective. Respond using markdown.`;
 
-  console.log('calculated prompt', myString);
-  console.log('constructed prompt', DEFAULT_SYSTEM_PROMPT);
+  // console.log('calculated prompt', myString);
+  // console.log('constructed prompt', DEFAULT_SYSTEM_PROMPT);
   // useEffect(() => {
   //   console.log("constructed prompt", DEFAULT_SYSTEM_PROMPT);
   // }, [DEFAULT_SYSTEM_PROMPT]);
