@@ -84,7 +84,7 @@ function updateIframeWidth() {
   if (window.innerWidth < 525) {
     console.log(window.innerWidth);
     iframeContainer.style.width = '100%';
-    iframeContainer.style.height = '100vh';
+    iframeContainer.style.height = 'calc((var(--vh, 1vh) * 100) - 180px)';
     iframeContainer.style.left = '0rem';
     iframeContainer.style.bottom = '0rem';
   } else {
@@ -95,6 +95,19 @@ function updateIframeWidth() {
     iframeContainer.style.bottom = '100px';
   }
 }
+window.addEventListener('resize', function () {
+  document.documentElement.style.setProperty(
+    '--vh',
+    window.innerHeight * 0.01 + 'px',
+  );
+});
+
+window.addEventListener('load', function () {
+  document.documentElement.style.setProperty(
+    '--vh',
+    window.innerHeight * 0.01 + 'px',
+  );
+});
 updateIframeWidth();
 window.addEventListener('resize', updateIframeWidth);
 iframeContainer.appendChild(xMark);

@@ -19,20 +19,18 @@ export const Navbar: FC<Props> = ({
   const { about_us, name } = useStore(GET_CHATBOT_DETAILS);
 
   return (
-    <div className=" pt-11">
-      <nav className="flex w-full justify-between bg-[#202123] text-white py-3 px-4">
-        <div className="max-w-[240px] overflow-hidden text-ellipsis whitespace-nowrap">
-          {name}
-        </div>
+    <nav className="flex w-full justify-between bg-[#202123] text-white py-3 px-4">
+      <div className="max-w-[240px] overflow-hidden text-ellipsis whitespace-nowrap">
+        {name}
+      </div>
 
-        <div className="flex items-center gap-3">
-          <IconRefresh
-            className="cursor-pointer hover:text-neutral-400 mr-0"
-            onClick={onNewConversation}
-          />
-          <div className="w-5 h-5"></div>
-        </div>
-      </nav>
-    </div>
+      <div className="flex items-center gap-3">
+        <IconRefresh
+          className="cursor-pointer hover:text-neutral-400 mr-0"
+          onClick={onNewConversation}
+        />
+        <div className="w-5 h-5"></div>
+      </div>
+    </nav>
   );
 };
