@@ -8,6 +8,7 @@ import wasm from '../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module
 
 import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
 import { Tiktoken, init } from '@dqbd/tiktoken/lite/init';
+import { getModelFromID } from '@/types/openai';
 
 export const config = {
   runtime: 'edge',
@@ -53,9 +54,11 @@ const handler = async (req: Request): Promise<Response> => {
     encoding.free();
 
     temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
-    const modelToUse = GET_CHATBOT_DETAILS.getState().ai_model;
-
-    const stream = await OpenAIStream(model, promptToSend, temperatureToUse, key, messagesToSend);
+    // const modelToUse = GET_CHATBOT_DETAILS.getState().ai_model;
+    const modelIdString = GET_CHATBOT_DETAILS.getState().ai_model;
+    const modelToUse = getModelFromID(modelIdString);
+    console.log("Model : ", modelToUse);
+    const stream = await OpenAIStream(modelToUse || model, promptToSend, temperatureToUse, key, messagesToSend);
 
     return new Response(stream);
   } catch (error) {
