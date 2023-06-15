@@ -31,3 +31,8 @@
 .h-calc {
   height: calc((var(--vh, 1vh) * 100) - 180px);
 }
+
+.h-allscreen {
+  height: calc((var(--vh, 1vh) * 100));
+  overflow-y: hidden;
+}

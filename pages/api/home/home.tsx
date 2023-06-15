@@ -383,7 +383,7 @@ const Home = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {selectedConversation && (
-        <main>
+        <main className="h-allscreen">
           <Navbar
             selectedConversation={selectedConversation}
             onNewConversation={handleNewConversation}
