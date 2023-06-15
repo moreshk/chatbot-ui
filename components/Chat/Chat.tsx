@@ -23,6 +23,7 @@ import {
 import { throttle } from '@/utils/data/throttle';
 
 import { ChatBody, Conversation, Message } from '@/types/chat';
+import { getModelFromID } from '@/types/openai';
 import { Plugin } from '@/types/plugin';
 
 import HomeContext from '@/pages/api/home/home.context';
@@ -43,7 +44,6 @@ import { supabase } from '@/lib/supabase';
 // console.log(supabaseUrl)
 import { v4 as uuidv4 } from 'uuid';
 import { useStore } from 'zustand';
-import { getModelFromID } from '@/types/openai';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -98,7 +98,6 @@ async function insertUserResponse(query: string, response: string) {
     } else {
       console.log('User response inserted successfully:', data);
     }
-
   } catch (error) {
     console.error('Error inserting user response:', error);
   }
@@ -113,8 +112,8 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
   const { initial_message, business_name, about_us, ai_model } =
     useStore(GET_CHATBOT_DETAILS);
 
-    const modelToUse = getModelFromID(ai_model);
-
+  const modelToUse = getModelFromID(ai_model);
+  console.log(modelToUse, ai_model, 'modelToUse');
   const {
     state: {
       selectedConversation,
