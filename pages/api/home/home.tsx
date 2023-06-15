@@ -17,7 +17,8 @@ import {
 } from '@/utils/app/clean';
 import {
   DEFAULT_TEMPERATURE,
-  GET_DEFAULT_SYSTEM_PROMPT,GET_CHATBOT_DETAILS
+  GET_CHATBOT_DETAILS,
+  GET_DEFAULT_SYSTEM_PROMPT,
 } from '@/utils/app/const';
 import {
   saveConversation,
@@ -31,19 +32,21 @@ import { getSettings } from '@/utils/app/settings';
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface, FolderType } from '@/types/folder';
-import { OpenAIModelID, OpenAIModels, fallbackModelID, getModelFromID } from '@/types/openai';
+import {
+  OpenAIModelID,
+  OpenAIModels,
+  fallbackModelID,
+  getModelFromID,
+} from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
 import { Chat } from '@/components/Chat/Chat';
-import { Chatbar } from '@/components/Chatbar/Chatbar';
 import { Navbar } from '@/components/Mobile/Navbar';
-import Promptbar from '@/components/Promptbar';
 
 import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
-
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
@@ -185,18 +188,15 @@ const Home = ({
   const temperatureToUse = GET_CHATBOT_DETAILS.getState().temperature;
   const modelIdString = GET_CHATBOT_DETAILS.getState().ai_model;
   const modelToUse = getModelFromID(modelIdString);
-  
+
   const handleNewConversation = () => {
     const lastConversation = conversations[conversations.length - 1];
-
-
-
 
     const newConversation: Conversation = {
       id: uuidv4(),
       name: t('New Conversation'),
       messages: [],
-      // model: lastConversation?.model 
+      // model: lastConversation?.model
       model: modelToUse || {
         id: OpenAIModels[defaultModelId].id,
         name: OpenAIModels[defaultModelId].name,
@@ -263,7 +263,6 @@ const Home = ({
   // ON LOAD --------------------------------------------
 
   useEffect(() => {
-
     const settings = getSettings();
     if (settings.theme) {
       dispatch({
@@ -329,15 +328,12 @@ const Home = ({
 
     const selectedConversation = localStorage.getItem('selectedConversation');
 
-
-
     if (selectedConversation) {
       const parsedSelectedConversation: Conversation =
         JSON.parse(selectedConversation);
       const cleanedSelectedConversation = cleanSelectedConversation(
         parsedSelectedConversation,
       );
-
 
       dispatch({
         field: 'selectedConversation',
@@ -387,25 +383,12 @@ const Home = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {selectedConversation && (
-        <main
-          className={`flex h-screen w-screen flex-col text-sm text-white dark:text-white ${lightMode}`}
-        >
-          <div className="fixed top-0 w-full">
-            <Navbar
-              selectedConversation={selectedConversation}
-              onNewConversation={handleNewConversation}
-            />
-          </div>
-
-          <div className="flex h-full w-full pt-[48px]">
-            {/* <Chatbar /> */}
-
-            <div className="flex flex-1">
-              <Chat stopConversationRef={stopConversationRef} />
-            </div>
-
-            {/* <Promptbar /> */}
-          </div>
+        <main>
+          <Navbar
+            selectedConversation={selectedConversation}
+            onNewConversation={handleNewConversation}
+          />
+          <Chat stopConversationRef={stopConversationRef} />
         </main>
       )}
     </HomeContext.Provider>

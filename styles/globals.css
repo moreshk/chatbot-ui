@@ -28,16 +28,6 @@
   height: 6px;
 }
 
-html {
-  background: #202123;
-}
-
-@media (max-width: 720px) {
-  pre {
-    width: calc(100vw - 110px);
-  }
-}
-
-pre:has(div.codeblock) {
-  padding: 0;
+.h-calc {
+  height: calc((var(--vh, 1vh) * 100) - 180px);
 }

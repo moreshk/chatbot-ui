@@ -57,7 +57,6 @@ const handler = async (req: Request): Promise<Response> => {
     // const modelToUse = GET_CHATBOT_DETAILS.getState().ai_model;
     const modelIdString = GET_CHATBOT_DETAILS.getState().ai_model;
     const modelToUse = getModelFromID(modelIdString);
-    console.log("Model : ", modelToUse);
     const stream = await OpenAIStream(modelToUse || model, promptToSend, temperatureToUse, key, messagesToSend);
 
     return new Response(stream);
