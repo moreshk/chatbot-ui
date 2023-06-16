@@ -2,6 +2,7 @@ import {
   IconArrowDown,
   IconBolt,
   IconBrandGoogle,
+  IconInfoCircle,
   IconPlayerStop,
   IconRepeat,
   IconSend,
@@ -25,6 +26,7 @@ import { Prompt } from '@/types/prompt';
 
 import HomeContext from '@/pages/api/home/home.context';
 
+import { DisclaimerButton } from '../Buttons/disclaimerButton';
 import { PluginSelect } from './PluginSelect';
 import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
@@ -383,16 +385,17 @@ export const ChatInput = ({
           )}
         </div>
       </div>
-      <div className="text-center py-2 font-semibold text-gray-800 dark:text-gray-100">
+      <div className="text-center py-2 font-semibold text-gray-800 dark:text-gray-100 flex justify-center items-center space-x-1">
         Powered by{' '}
         <a
           href="https://koretex.ai"
           target="_blank"
           rel="noreferrer"
-          className="underline text-gray-1000"
+          className="underline text-gray-1000 ml-1 relative"
         >
           Koretex AI
         </a>
+        <DisclaimerButton />
       </div>
       {/* <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
         <a
