@@ -84,7 +84,7 @@ function updateIframeWidth() {
   if (window.innerWidth < 525) {
     console.log(window.innerWidth);
     iframeContainer.style.width = '100%';
-    iframeContainer.style.height = 'calc((var(--vh, 1vh) * 100) - 180px)';
+    iframeContainer.style.height = 'calc(var(--vh, 1vh) * 100)';
     iframeContainer.style.left = '0rem';
     iframeContainer.style.bottom = '0rem';
   } else {
