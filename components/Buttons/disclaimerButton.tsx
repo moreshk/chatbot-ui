@@ -10,11 +10,11 @@ export const DisclaimerButton = () => {
 
   return (
     <div>
-      <a id="my-anchor-element">
-        <IconInfoCircle />{' '}
-      </a>
+      <p id="tool-tip">
+        <IconInfoCircle />
+      </p>
       <Tooltip
-        anchorSelect="#my-anchor-element"
+        anchorSelect="#tool-tip"
         content={
           disclaimer
             ? disclaimer
