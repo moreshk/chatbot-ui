@@ -52,6 +52,7 @@ type ChatbotDetailsStore = {
   business_name: string,
   initial_message: string,
   temperature: number,
+  disclaimer: string,
   ai_model: string,
   setChatbotDetails: () => Promise<void>,
 };
@@ -63,11 +64,12 @@ export const GET_CHATBOT_DETAILS = create<ChatbotDetailsStore>(set => ({
   initial_message: '',
   temperature: 0,
   ai_model: "gpt-3.5-turbo",
+  disclaimer: '',
   setChatbotDetails: async () => {
     const chatbotId = Router.query.chatbotId;
     const { data, error } = await supabase
       .from('chatbots')
-      .select('name, about_us, business_name, initial_message, temperature, ai_model')
+      .select('name, about_us, business_name, initial_message, temperature, ai_model, disclaimer')
       .eq('id', chatbotId);
     if (error) {
       console.log(error);
