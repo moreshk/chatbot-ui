@@ -1,5 +1,6 @@
 import { IconInfoCircle } from '@tabler/icons-react';
 import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 
 import { GET_CHATBOT_DETAILS } from '@/utils/app/const';
 
