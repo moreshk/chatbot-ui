@@ -16,7 +16,7 @@ export const Navbar: FC<Props> = ({
   selectedConversation,
   onNewConversation,
 }) => {
-  const { about_us, name } = useStore(GET_CHATBOT_DETAILS);
+  const { about_us, name, setChatbotDetails } = useStore(GET_CHATBOT_DETAILS);
 
   return (
     <nav className="flex w-full justify-between bg-[#202123] text-white py-3 px-4">
@@ -27,7 +27,10 @@ export const Navbar: FC<Props> = ({
       <div className="flex items-center gap-3">
         <IconRefresh
           className="cursor-pointer hover:text-neutral-400 mr-0"
-          onClick={onNewConversation}
+          onClick={() => {
+            onNewConversation();
+            setChatbotDetails();
+          }}
         />
         <div className="w-5 h-5"></div>
       </div>
