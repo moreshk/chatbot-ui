@@ -24,7 +24,7 @@ export const Navbar: FC<Props> = ({
       <div className="flex items-center gap-2">
         {bot_profile_pic && (
           <img
-            className="w-6 h-6 rounded-full object-contain"
+            className="w-8 h-8 rounded-full object-contain"
             src={bot_profile_pic}
             alt="Bot profile picture"
             width={24}
