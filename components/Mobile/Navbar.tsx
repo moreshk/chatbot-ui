@@ -32,7 +32,7 @@ export const Navbar: FC<Props> = ({
           />
         )}
         <div className="max-w-[240px] overflow-hidden text-ellipsis whitespace-nowrap">
-          {name}i
+          {name}
         </div>
       </div>
 
