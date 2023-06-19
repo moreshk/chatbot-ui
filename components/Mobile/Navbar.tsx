@@ -21,7 +21,7 @@ export const Navbar: FC<Props> = ({
 
   return (
     <nav className="flex w-full justify-between bg-[#202123] text-white py-3 px-4">
-      <div>
+      <div className="flex items-center gap-2">
         {bot_profile_pic && (
           <img
             className="w-6 h-6 rounded-full object-contain"
