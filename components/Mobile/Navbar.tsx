@@ -27,8 +27,8 @@ export const Navbar: FC<Props> = ({
             className="w-8 h-8 rounded-full object-contain"
             src={bot_profile_pic}
             alt="Bot profile picture"
-            width={24}
-            height={24}
+            width={32}
+            height={32}
           />
         )}
         <div className="max-w-[240px] overflow-hidden text-ellipsis whitespace-nowrap">
