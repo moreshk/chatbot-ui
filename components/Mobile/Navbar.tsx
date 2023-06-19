@@ -24,11 +24,11 @@ export const Navbar: FC<Props> = ({
       <div className="flex items-center gap-2">
         {bot_profile_pic && (
           <img
-            className="w-8 h-8 rounded-full object-contain"
+            className="w-12 h-12 rounded-full object-contain"
             src={bot_profile_pic}
             alt="Bot profile picture"
-            width={32}
-            height={32}
+            width={48}
+            height={46}
           />
         )}
         <div className="max-w-[240px] overflow-hidden text-ellipsis whitespace-nowrap">
