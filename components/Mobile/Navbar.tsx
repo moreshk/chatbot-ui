@@ -28,7 +28,7 @@ export const Navbar: FC<Props> = ({
             src={bot_profile_pic}
             alt="Bot profile picture"
             width={48}
-            height={46}
+            height={48}
           />
         )}
         <div className="max-w-[240px] overflow-hidden text-ellipsis whitespace-nowrap">
