@@ -96,7 +96,8 @@ bubbleBUtton.addEventListener('click', () => {
   xMark.style.display = xMark.style.display === 'none' ? 'block' : 'none';
   iframeContainer.style.display =
     iframeContainer.style.display === 'none' ? 'block' : 'none';
-  chatbotOpened = !chatbotOpened;
+  console.log('chatbotOpened', chatbotOpened);
+  chatbotOpened = true;
 });
 
 function updateIframeWidth() {
