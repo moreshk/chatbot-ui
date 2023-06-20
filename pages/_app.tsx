@@ -57,7 +57,7 @@ Limit your responses to no more than one or two lines at a time and collect info
   // console.log('calculated prompt', myString);
   // console.log('constructed prompt', DEFAULT_SYSTEM_PROMPT);
   // useEffect(() => {
-  //   console.log("constructed prompt", DEFAULT_SYSTEM_PROMPT);
+    console.log("constructed prompt", DEFAULT_SYSTEM_PROMPT);
   // }, [DEFAULT_SYSTEM_PROMPT]);
 
   if (!DEFAULT_SYSTEM_PROMPT)
