@@ -41,22 +41,30 @@ const bubbleBUtton = document.createElement('button');
 let chatbotOpened = false;
 let timeoutId;
 
-window.addEventListener('scroll', () => {
+function openChatbot() {
+  bubbleBUtton.click();
+  chatbotOpened = true;
+}
+
+function setAutoOpenTimeout() {
   clearTimeout(timeoutId);
+  timeoutId = setTimeout(() => {
+    if (!chatbotOpened) {
+      openChatbot();
+    }
+  }, 6000);
+}
 
-  if (!chatbotOpened) {
-    timeoutId = setTimeout(() => {
-      bubbleBUtton.click();
-    }, 6000);
-  }
-
+window.addEventListener('scroll', () => {
   const scrollPosition = window.scrollY;
   const windowHeight = window.innerHeight;
   const openThreshold = windowHeight * 1.5;
 
   if (!chatbotOpened && scrollPosition > openThreshold) {
-    bubbleBUtton.click();
+    openChatbot();
   }
+
+  setAutoOpenTimeout();
 });
 
 bubbleBUtton.style.border = 'none';
