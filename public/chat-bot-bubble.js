@@ -43,14 +43,12 @@ let chatbotOpened = false;
 window.addEventListener('scroll', () => {
   const scrollPosition = window.scrollY;
   const windowHeight = window.innerHeight;
-  const halfScreen = windowHeight / 2;
+  const openThreshold = windowHeight * 0.5;
   console.log('windowHeight', windowHeight);
   console.log('half screen touch', halfScreen);
-  console.log('scrollPosition', scrollPosition);
-  const chatbotContainer = document.getElementById('my-iframeContainer');
-  const closeButton = document.getElementById('closeButton');
+  console.log('openThreshold', openThreshold);
 
-  if (!chatbotOpened && scrollPosition > halfScreen) {
+  if (!chatbotOpened && scrollPosition > openThreshold) {
     bubbleBUtton.click();
   }
 });
