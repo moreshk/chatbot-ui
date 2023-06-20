@@ -38,6 +38,21 @@ const bubbleStyle = document.createElement('style');
 bubbleStyle.appendChild(document.createTextNode(keyframes));
 const bubbleBUtton = document.createElement('button');
 
+window.addEventListener('scroll', () => {
+  const scrollPosition = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const halfScreen = windowHeight / 2;
+  console.log('half screen touch', halfScreen);
+  const chatbotContainer = document.getElementById('my-iframeContainer');
+
+  if (scrollPosition > halfScreen) {
+    console.log('showing');
+    chatbotContainer.style.display = 'block';
+  } else {
+    chatbotContainer.style.display = 'none';
+  }
+});
+
 bubbleBUtton.style.border = 'none';
 bubbleBUtton.style.position = 'fixed';
 bubbleBUtton.style.flexDirection = 'column';
