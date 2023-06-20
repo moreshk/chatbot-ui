@@ -39,8 +39,17 @@ bubbleStyle.appendChild(document.createTextNode(keyframes));
 const bubbleBUtton = document.createElement('button');
 
 let chatbotOpened = false;
+let timeoutId;
 
 window.addEventListener('scroll', () => {
+  clearTimeout(timeoutId);
+
+  if (!chatbotOpened) {
+    timeoutId = setTimeout(() => {
+      bubbleBUtton.click();
+    }, 6000);
+  }
+
   const scrollPosition = window.scrollY;
   const windowHeight = window.innerHeight;
   const openThreshold = windowHeight * 1.5;
