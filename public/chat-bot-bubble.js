@@ -61,8 +61,8 @@ xMark.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" f
 xMark.style.position = 'absolute';
 xMark.style.width = '28px';
 xMark.style.height = '28x';
-xMark.style.top = '30px';
-xMark.style.right = '22px';
+xMark.style.top = '22px';
+xMark.style.right = '12px';
 xMark.style.zIndex = '999999999';
 xMark.style.color = '#fff';
 xMark.style.cursor = 'pointer';
