@@ -43,10 +43,7 @@ let chatbotOpened = false;
 window.addEventListener('scroll', () => {
   const scrollPosition = window.scrollY;
   const windowHeight = window.innerHeight;
-  const openThreshold = windowHeight * 2;
-  console.log('windowHeight', windowHeight);
-  console.log('openThreshold', openThreshold);
-  console.log('scrollPosition', scrollPosition);
+  const openThreshold = windowHeight * 1.5;
 
   if (!chatbotOpened && scrollPosition > openThreshold) {
     bubbleBUtton.click();
