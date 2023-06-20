@@ -45,7 +45,6 @@ window.addEventListener('scroll', () => {
   const windowHeight = window.innerHeight;
   const openThreshold = windowHeight * 0.5;
   console.log('windowHeight', windowHeight);
-  console.log('half screen touch', halfScreen);
   console.log('openThreshold', openThreshold);
 
   if (!chatbotOpened && scrollPosition > openThreshold) {
