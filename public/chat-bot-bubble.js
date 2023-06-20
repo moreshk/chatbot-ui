@@ -38,6 +38,8 @@ const bubbleStyle = document.createElement('style');
 bubbleStyle.appendChild(document.createTextNode(keyframes));
 const bubbleBUtton = document.createElement('button');
 
+let chatbotOpened = false;
+
 window.addEventListener('scroll', () => {
   const scrollPosition = window.scrollY;
   const windowHeight = window.innerHeight;
@@ -48,13 +50,8 @@ window.addEventListener('scroll', () => {
   const chatbotContainer = document.getElementById('my-iframeContainer');
   const closeButton = document.getElementById('closeButton');
 
-  if (scrollPosition > halfScreen) {
-    console.log('showing');
-    chatbotContainer.style.display = 'block';
-    closeButton.style.display = 'block';
-  } else {
-    chatbotContainer.style.display = 'none';
-    closeButton.style.display = 'none';
+  if (!chatbotOpened && scrollPosition > halfScreen) {
+    bubbleBUtton.click();
   }
 });
 
@@ -99,6 +96,7 @@ bubbleBUtton.addEventListener('click', () => {
   xMark.style.display = xMark.style.display === 'none' ? 'block' : 'none';
   iframeContainer.style.display =
     iframeContainer.style.display === 'none' ? 'block' : 'none';
+  chatbotOpened = !chatbotOpened;
 });
 
 function updateIframeWidth() {
