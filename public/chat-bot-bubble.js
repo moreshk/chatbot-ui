@@ -38,35 +38,6 @@ const bubbleStyle = document.createElement('style');
 bubbleStyle.appendChild(document.createTextNode(keyframes));
 const bubbleBUtton = document.createElement('button');
 
-let chatbotOpened = false;
-let timeoutId;
-
-function openChatbot() {
-  bubbleBUtton.click();
-  chatbotOpened = true;
-}
-
-function setAutoOpenTimeout() {
-  clearTimeout(timeoutId);
-  timeoutId = setTimeout(() => {
-    if (!chatbotOpened) {
-      openChatbot();
-    }
-  }, 6000);
-}
-
-window.addEventListener('scroll', () => {
-  const scrollPosition = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const openThreshold = windowHeight * 1.5;
-
-  if (!chatbotOpened && scrollPosition > openThreshold) {
-    openChatbot();
-  }
-
-  setAutoOpenTimeout();
-});
-
 bubbleBUtton.style.border = 'none';
 bubbleBUtton.style.position = 'fixed';
 bubbleBUtton.style.flexDirection = 'column';
@@ -108,7 +79,6 @@ bubbleBUtton.addEventListener('click', () => {
   xMark.style.display = xMark.style.display === 'none' ? 'block' : 'none';
   iframeContainer.style.display =
     iframeContainer.style.display === 'none' ? 'block' : 'none';
-  chatbotOpened = true;
 });
 
 function updateIframeWidth() {
