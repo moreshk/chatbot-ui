@@ -118,7 +118,7 @@ export const GET_DEFAULT_SYSTEM_PROMPT = create<{ DEFAULT_SYSTEM_PROMPT: string,
 
 ${about_us}
 
-Your mission is to gather essential information from users in a conversational manner. Begin by warmly welcoming them: "Hello, welcome to [Business Name]. How may I assist you today?"
+Your mission is to gather essential information from users in a conversational manner. Begin by warmly welcoming them: "Hello, welcome to ${business_name}. How may I assist you today?"
 
 Once the user responds, begin to gather the following details from them sequentially:
 
