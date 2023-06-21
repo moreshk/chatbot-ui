@@ -20,7 +20,7 @@ export const Navbar: FC<Props> = ({
     useStore(GET_CHATBOT_DETAILS);
 
   return (
-    <nav className="flex w-full justify-between bg-[#202123] text-white relative px-4 h-[72px]">
+    <nav className="flex w-full justify-between bg-[#202123] text-white relative px-4 h-16">
       <div className="flex items-center gap-2">
         {bot_profile_pic && (
           <img
